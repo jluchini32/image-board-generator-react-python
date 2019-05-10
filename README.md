@@ -21,3 +21,7 @@
 1. Multiple grid options versus just adding them side by side.
 2. Option to choose an image from 10 or so images from search.
 3. Themed boards that anyone can add to (social element).
+
+## Wireframes
+  ![wireframes](wireframes/wireframes-01.jpg)
+  ![wireframes](wireframes/wireframes-02.jpg) 
