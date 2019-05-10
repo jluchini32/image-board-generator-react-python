@@ -23,5 +23,5 @@
 3. Themed boards that anyone can add to (social element).
 
 ## Wireframes
-  ![wireframes](wireframes/wireframes-01.jpg)
-  ![wireframes](wireframes/wireframes-02.jpg) 
+  ![wireframes](images/wireframes-01.jpg)
+  ![wireframes](images/wireframes-02.jpg) 
