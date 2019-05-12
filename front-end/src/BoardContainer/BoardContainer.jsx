@@ -17,7 +17,10 @@ class BoardContainer extends Component {
             credentials: 'include'
         })
         const boardsJSON = await boards.json();
-        console.log(boardsJSON)
+        console.log(boardsJSON);
+        this.setState({
+            boards: [boardsJSON]
+        })
     };
     createBoard = async (formData) => {
         const newBoard = await fetch('http://localhost:9000/boards', {
@@ -38,9 +41,18 @@ class BoardContainer extends Component {
     };
 
     render(){
+        console.log(this.state.boards)
+        const boardsList = this.state.boards.map((board, i) => {
+            return (
+            <li key={ board._id }>{ board.data[i].title }</li>
+            )
+        })
         return (
             <div>
             <h1>BoardContainer</h1>
+            <ul>
+                { boardsList }
+            </ul>
             <MakeBoard createBoard={ this.createBoard } />
             <Search />
             </div>
