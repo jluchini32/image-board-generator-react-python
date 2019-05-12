@@ -6,6 +6,6 @@ const boardSchema = new mongoose.Schema({
     images: []
 })
 
-const board = mongoose.model('Board', boardSchema);
+const Board = mongoose.model('Board', boardSchema);
 
 module.exports = Board;

@@ -6,6 +6,6 @@ const userSchema = new mongoose.Schema({
     boards: [{type: mongoose.Schema.Types.ObjectId, ref: 'Board'}]
 })
 
-const user = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;

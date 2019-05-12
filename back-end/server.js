@@ -10,11 +10,11 @@ require('./db/db');
 //     uri: 'mongodb://localhost:27017/buzzed',
 //     collection: 'mySessions'
 //   });
-// app.use(cors({
-//     origin: "http://localhost:3000",
-//     credentials: true,
-//     optionsSuccessStatus: 200
-// }))
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+    optionsSuccessStatus: 200
+}))
 // app.use(session({
 //     saveUninitialized: true,
 //     secret: "keepitsafe",
