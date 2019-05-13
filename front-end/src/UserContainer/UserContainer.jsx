@@ -9,6 +9,9 @@ class UserContainer extends Component {
 
         }
     }
+    handleRegister(){
+        console.log('register')
+    }
     render(){
         return(
             <div>
