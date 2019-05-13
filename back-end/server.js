@@ -36,7 +36,6 @@ const boardController = require('./controllers/BoardController');
 app.use('/users', userController);
 app.use('/boards', boardController);
 
-// app.listen(process.env.PORT || 9000, ()=>{
 
 app.listen(9000, ()=>{
     console.log("back-end server working")

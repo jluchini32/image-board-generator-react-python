@@ -67,7 +67,7 @@ class BoardContainer extends Component {
                     <div key={ board.data[i]._id }>
                         <li>{ board.data[i].title }</li>
                         <li>{ board.data[i].description }</li>
-                        <img src={ this.state.boards[i].data[i].images[i] } />
+                        <img alt={i} src={ this.state.boards[i].data[i].images[i] } />
                     </div>
                 )   
         })
