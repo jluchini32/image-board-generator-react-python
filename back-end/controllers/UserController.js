@@ -21,18 +21,17 @@ router.get('/', (req, res) => {
 // })
 
 // register
-router.post('/', async (req, res) => {
+router.post("/", async (req, res)=>{
     try{
         const hashedPassword = bcrypt.hashSync(req.body.password, 10);
         req.body.password = hashedPassword;
-        const newUser = await User.create(req.body);
+        const newUser = await User.create(req.body)
         newUser.password = null;
         req.session.userId = newUser._id;
         res.json({
             status: 200,
             data: newUser
         })
-        console.log(newUser)
     }catch(err){
         console.log(err);
         res.json({

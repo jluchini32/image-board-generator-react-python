@@ -8,18 +8,16 @@ class UserContainer extends Component {
         this.state = {
 
         }
-    }
-    handleRegister(){
-        console.log('register')
-    }
+    };
+
     render(){
         return(
             <div>
                 <h1>UserContainer</h1>
                     <div>
-                        <Register />
+                        <Register handleRegister={ this.props.handleRegister } />
                         <hr />
-                        <Login />
+                        <Login handleLogin={ this.props.handleLogin } />
                     </div>
             </div>
         )
