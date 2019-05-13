@@ -8,17 +8,31 @@ router.get('/', (req, res) => {
 });
 
 // login
-// router.post('/login', async (req, res) => {
-//     try{
-//         const foundUser = await User.findOne({username: req.body.username})
-
-//     }catch(err){
-//         console.log(err);
-            // res.json({
-            //     status: 500,
-            //     data: err
-//     }
-// })
+router.post('/login', async (req, res) => {
+    try{
+        const foundUser = await User.findOne({username: req.body.username})
+        if(foundUser){
+            if(bcrypt.compareSync(req.body.password, foundUser.password) === true){
+                req.session.logged = true;
+                req.session.username = req.body.username;
+                res.json({
+                    status: 200,
+                    data: foundUser
+                })
+            }
+        }
+        res.send({
+            status: 500,
+            data: "Username not found or password incorrect."
+        })
+    }catch(err){
+        console.log(err);
+            res.json({
+                status: 500,
+                data: err
+            })
+    }
+})
 
 // register
 router.post("/", async (req, res)=>{
@@ -39,6 +53,6 @@ router.post("/", async (req, res)=>{
             data: err
         })
     }
-})
+});
 
 module.exports = router;

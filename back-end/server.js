@@ -3,7 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
-// const session = require('express-session');
+const session = require('express-session');
 // const MongoDBStore = require('connect-mongodb-session')(session);
 require('./db/db');
 // const store = new MongoDBStore({
@@ -15,15 +15,15 @@ app.use(cors({
     credentials: true,
     optionsSuccessStatus: 200
 }))
-// app.use(session({
-//     saveUninitialized: true,
-//     secret: "keepitsafe",
-//     resave: false,
-//     store: store,
-//     cookie: {
-//         maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
-//       },
-// }))
+app.use(session({
+    saveUninitialized: true,
+    secret: "supersecretsafestuff",
+    resave: false,
+    // store: store,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+      },
+}))
 app.use(morgan('short'));
 app.use(bodyParser.json());
 // app.use((req, res, next)=>{

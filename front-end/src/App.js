@@ -13,25 +13,52 @@ class App extends Component {
     }
   }
   handleRegister = async (formData) => {
-    console.log(formData, 'register');
-    const newUser = await fetch("http://localhost:9000/users", {
-      method: "POST",
-      body: JSON.stringify(formData),
-      credentials: 'include',
-      headers: {
-        "Content-Type": "application/json",
-      }
-    })
-    const parsedResponse = await newUser.json();
-    if(parsedResponse.status === 200){
-      this.setState({
-        loggedIn: true,
-        currentUser: parsedResponse.data
+    try{
+      console.log(formData, 'register');
+      const newUser = await fetch("http://localhost:9000/users", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        credentials: 'include',
+        headers: {
+          "Content-Type": "application/json",
+        }
       })
-    } 
+      const parsedResponse = await newUser.json();
+      if(parsedResponse.status === 200){
+        this.setState({
+          loggedIn: true,
+          currentUser: parsedResponse.data
+        })
+      } 
+
+    }catch(err){
+      console.log(err);
+    }
   };
-  handleLogin = async () => {
-    console.log('login')
+  handleLogin = async (formData) => {
+    console.log(formData, 'login');
+    try{
+      const loginUser = await fetch('http://localhost:9000/users/login', {
+        method: "POST",
+        body: JSON.stringify(formData),
+        credentials: 'include',
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      const parsedLoginResponse = await loginUser.json();
+      console.log(parsedLoginResponse);
+      if(parsedLoginResponse.status === 200){
+        this.setState({
+          loggedIn: true,
+          currentUser: parsedLoginResponse.data
+        })
+      }
+
+    }catch(err){
+      console.log(err);
+    }
+
   };
   render(){
     console.log(this.state, 'this.state app.js')
