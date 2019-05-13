@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MakeBoard from './MakeBoard/MakeBoard';
 import Search from './MakeBoard/Search';
+import BoardDetail from './BoardDetail/BoardDetail';
 
 class BoardContainer extends Component {
     constructor(){
@@ -18,8 +19,10 @@ class BoardContainer extends Component {
             credentials: 'include'
         })
         const boardsJSON = await boards.json();
+        console.log(boardsJSON, 'boardsJson')
         this.setState({
-            boards: [boardsJSON]
+            boards: boardsJSON.data,
+            images: [...boardsJSON.data]
         })
     };
     createBoard = async (formData) => {
@@ -31,10 +34,12 @@ class BoardContainer extends Component {
                 "Content-Type": "application/json"
             }
         })
+        console.log(newBoard, 'newBoard')
         const parsedResponse = await newBoard.json();
         if(newBoard.status === 200){
             this.setState({
                 boards: [...this.state.boards, parsedResponse]
+                // images: [parsedResponse.images]
             })
         }
     };
@@ -59,34 +64,14 @@ class BoardContainer extends Component {
     };
 
     render(){
-        console.log(this.state.boards, 'this.state.boards')
-        const boardsList = this.state.boards.map((board, i) => {
-            // console.log(this.state.boards[i].data[i].images, 'this.state.boards.data')
+        console.log(this.state.boards, 'this.state.boards BoardContainer')
+        console.log(this.state.images, 'this.state.images BoardContainer')
 
-                return (
-                    <div key={ board.data[i]._id }>
-                        <li>{ board.data[i].title }</li>
-                        <li>{ board.data[i].description }</li>
-                        <img alt={i} src={ this.state.boards[i].data[i].images[i] } />
-                    </div>
-                )   
-        })
-// figure out how to get images to show up
-
-        // const imageList = this.state.boards.data.map((image) => {
-        //         return (
-        //             <img src={ image.data.images } />
-        //         )
-        // })
-        console.log(boardsList, 'boardsList')
 
         return (
             <div>
             <h1>BoardContainer</h1>
-            <ul>
-                { boardsList }
-            </ul>
-            {/* { imageList} */}
+            <BoardDetail boards={ this.state.boards } />
             <MakeBoard createBoard={ this.createBoard } createImage={ this.createImage } />
             <Search />
             </div>

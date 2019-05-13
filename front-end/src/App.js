@@ -60,17 +60,24 @@ class App extends Component {
     }
 
   };
+  logout = () => {
+
+  };
   render(){
     console.log(this.state, 'this.state app.js')
     return (
       <div className="App">
+      <nav>
+        <button onSubmit={ this.logout } type="submit">Logout</button>
+      </nav>
         <div>
           <UserContainer handleRegister={ this.handleRegister } handleLogin={ this.handleLogin } />
         </div>
         <hr />
+          <Profile />
+        <hr />
         <div>
           <BoardContainer />
-          <Profile />
         </div>
       </div>
     );
