@@ -15,6 +15,8 @@ class UserContainer extends Component {
                 <h1>UserContainer</h1>
                     <div>
                         <Register />
+                        <hr />
+                        <Login />
                     </div>
             </div>
         )
