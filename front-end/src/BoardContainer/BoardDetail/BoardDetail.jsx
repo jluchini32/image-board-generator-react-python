@@ -1,38 +1,20 @@
 import React, { Component } from 'react';
+import ImageList from './ImageList';
 
 class BoardDetail extends Component {
     constructor(){
         super();
         this.state = {
-
+            images: []
         }
     }
     render(){
-        console.log(this.props.boards, 'this.props.boards boardDetail');
-
-        const imageList = this.props.boards.map((image, i) => {
-            console.log(image.images, 'from imageList')
+        const boardsList = this.props.boards.map((board, i) => {
             return (
-                image.images
-            )
-        });
-        console.log(imageList, 'after imageList');
-
-        const images = imageList.map((image, i) => {
-            console.log(image, 'from images')
-            return(
-                <img src={ image[i] } />
-            )
-        })
-        console.log(images, 'after images')
-  
-        const boardsList = this.props.boards.map((board) => {
-            return (
-                <div key={ board._id }>
+                <div key={ board._id } className="parent">
                     <div>{ board.title }</div>
                     <div>{ board.description }</div>
-                    {/* <div>{ board.images } </div> */}
-                    <div>{ images }</div>
+                    <ImageList images = { board.images }/>
                 </div>
             )
         });   
@@ -41,6 +23,8 @@ class BoardDetail extends Component {
                 <h1>BoardDetail</h1>
                 <div>
                     { boardsList }
+                    <div>
+                    </div>
                 </div>
             </div>
         )

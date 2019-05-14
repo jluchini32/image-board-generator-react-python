@@ -7,8 +7,7 @@ class BoardContainer extends Component {
     constructor(){
         super();
         this.state = {
-            boards: [],
-            images: []
+            boards: []
         }
     }
     componentDidMount(){
@@ -19,7 +18,6 @@ class BoardContainer extends Component {
             credentials: 'include'
         })
         const boardsJSON = await boards.json();
-        console.log(boardsJSON, 'boardsJson')
         this.setState({
             boards: boardsJSON.data,
             images: [...boardsJSON.data]
@@ -39,7 +37,6 @@ class BoardContainer extends Component {
         if(newBoard.status === 200){
             this.setState({
                 boards: [...this.state.boards, parsedResponse]
-                // images: [parsedResponse.images]
             })
         }
     };
@@ -64,10 +61,6 @@ class BoardContainer extends Component {
     };
 
     render(){
-        console.log(this.state.boards, 'this.state.boards BoardContainer')
-        console.log(this.state.images, 'this.state.images BoardContainer')
-
-
         return (
             <div>
             <h1>BoardContainer</h1>
@@ -77,7 +70,6 @@ class BoardContainer extends Component {
             </div>
         )
     }
-
 }
 
 export default BoardContainer;

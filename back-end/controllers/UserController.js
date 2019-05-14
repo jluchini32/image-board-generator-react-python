@@ -32,6 +32,16 @@ router.post('/login', async (req, res) => {
                 data: err
             })
     }
+});
+
+// logout
+router.get('/logout', async (req, res) => {
+    try{
+        req.session.destroy();
+        console.log('logged out')
+    }catch(err){
+        console.log(err);
+    }
 })
 
 // register

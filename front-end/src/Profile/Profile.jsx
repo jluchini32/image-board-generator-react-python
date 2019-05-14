@@ -9,10 +9,12 @@ class Profile extends Component {
         }
     }
     render(){
+        // console.log(this.props, 'this.props from PROFILE')
+        // const profileInfo = 
         return (
             <div>
             <h1>Profile</h1>
-            <EditProfile />
+            <EditProfile handleRegistration={ this.props.handleRegistration }/>
             </div>
         )
     }

@@ -10,11 +10,26 @@ require('./db/db');
 //     uri: 'mongodb://localhost:27017/buzzed',
 //     collection: 'mySessions'
 //   });
-app.use(cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-    optionsSuccessStatus: 200
-}))
+const Unsplash = require('unsplash-js').default;
+
+const unsplash = new Unsplash({
+  applicationId: "1fe232c10d045efb942c686798a897086057edb740c100d8ee47adf69d77c998",
+  secret: "8e580bcf031fd093e5d435b4451b9fa0f05d7bb74eba277608d04fef202f284e"
+});
+const whitelist = ["http://localhost:3000", "https://api.unsplash.com/search/photos"];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+  credentials: true,
+  optionsSuccessStatus: 200
+}
+
+app.use(cors(corsOptions));
 app.use(session({
     saveUninitialized: true,
     secret: "supersecretsafestuff",
@@ -40,3 +55,6 @@ app.use('/boards', boardController);
 app.listen(9000, ()=>{
     console.log("back-end server working")
 })
+
+
+// unsplash api user id 1fe232c10d045efb942c686798a897086057edb740c100d8ee47adf69d77c998

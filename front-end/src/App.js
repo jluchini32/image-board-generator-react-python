@@ -35,6 +35,14 @@ class App extends Component {
       console.log(err);
     }
   };
+  handleEditProfile = async (formData) => {
+    try{
+      console.log('logout');
+
+    }catch(err){
+      console.log(err); 
+    }
+  }
   handleLogin = async (formData) => {
     console.log(formData, 'login');
     try{
@@ -60,21 +68,36 @@ class App extends Component {
     }
 
   };
-  logout = () => {
+  logout = async () => {
+    console.log('logout');
+    try{
+      const logoutUser = await fetch('http://localhost:9000/users/logout', {
+        method: "GET",
+        credentials: 'include'
+      });
+      if(logoutUser.status === 200){
+        this.setState({
+          loggedIn: false,
+          currentUser: null
+        })
+      }
+    }catch(err){
+      console.log(err);
+    }
 
   };
   render(){
-    console.log(this.state, 'this.state app.js')
+    // console.log(this.state, 'this.state app.js')
     return (
       <div className="App">
       <nav>
-        <button onSubmit={ this.logout } type="submit">Logout</button>
+        <button onClick={() =>  this.logout } type="submit">Logout</button>
       </nav>
         <div>
           <UserContainer handleRegister={ this.handleRegister } handleLogin={ this.handleLogin } />
         </div>
         <hr />
-          <Profile />
+          <Profile handleRegister={ this.handleRegister } />
         <hr />
         <div>
           <BoardContainer />
