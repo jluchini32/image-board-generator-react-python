@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
 
 class SearchResults extends Component {
-    constructor(){
-        super();
-    }
     render(){
-        console.log(this.props, 'this.props SearchResults')
-        const searchResultsList = this.props.images.map((image) => {
+        const searchResultsList = this.props.images.map((image, i) => {
             return(
-                <img src={ image } />
+                <img onClick={ this.props.handleImageClick } key= { i } alt="" src={ image } />
             )
         })
         return(
             <div>
-            <h1>Search Results</h1>
             { searchResultsList }
             </div>
         )

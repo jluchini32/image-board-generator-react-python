@@ -24,7 +24,6 @@ class Search extends Component {
           }
         })
         .then(reponse => {
-            console.log(reponse);
             this.setState({results: reponse.data});
           })
         .then(showResults => {
@@ -40,14 +39,14 @@ class Search extends Component {
             [e.target.name] : e.target.value
         })
     }
-    handleSearchResults = () => {
+    handleSearchResults = async () => {
         const searchResultsArray = this.state.results.results;
-        console.log(searchResultsArray)
-        const imageSearchList = searchResultsArray.map((result) => {
+        await searchResultsArray.map((result) => {
             this.setState({
                 images: [...this.state.images, result.urls.regular]
             })
         })
+        this.props.imageStateChange(this.state);
     };
     handleSubmit = (e) => {
         e.preventDefault();
@@ -55,8 +54,6 @@ class Search extends Component {
     };
 
     render(){
-        console.log(this.state.results, 'this.state.results');
-        console.log(this.state.images, 'this.state.images')
         return (
             <div>
                 <h1>Search</h1>
@@ -65,7 +62,7 @@ class Search extends Component {
                     <button type="submit">SUBMIT</button></h3>
                 </form>
                 
-                <SearchResults images={ this.state.images } />
+                <SearchResults images={ this.state.images } handleImageClick = { this.props.handleImageClick } />
             </div>
         )
     };

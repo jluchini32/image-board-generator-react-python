@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import MakeBoard from './MakeBoard/MakeBoard';
-import Search from './MakeBoard/Search';
 import BoardDetail from './BoardDetail/BoardDetail';
 
 class BoardContainer extends Component {
     constructor(){
         super();
         this.state = {
-            boards: []
+            boards: [],
+            selectedImage: {}
         }
     }
     componentDidMount(){
@@ -32,7 +32,7 @@ class BoardContainer extends Component {
                 "Content-Type": "application/json"
             }
         })
-        console.log(newBoard, 'newBoard')
+        // console.log(newBoard, 'newBoard')
         const parsedResponse = await newBoard.json();
         if(newBoard.status === 200){
             this.setState({
@@ -40,33 +40,26 @@ class BoardContainer extends Component {
             })
         }
     };
-    createImage = async (query) => {
-        const newImage = await fetch(`https://api.unsplash.com/search/photos/?page=1&per_page=10&query=${query}&client_id=1fe232c10d045efb942c686798a897086057edb740c100d8ee47adf69d77c998`, {
-            credentials: 'include',
-            method: "POST",
-            body: JSON.stringify(query),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-        const parsedResponse = await newImage.json();
-        if(newImage.status === 200){
+    // finish refactoring for image click
+    createImage = () => {
+        const newImage = this.state.boards.map((board) => {
             this.setState({
-                images: [...this.state.boards.image, parsedResponse]
+                [board.images]: [...this.state.board.images, this.state.selectedImage]
             })
-        }
-        console.log(this.state.boards, 'this.state.boards')
-        console.log(this.state.boards.images, 'this.state.boards.images')
-
+        })
     };
-
+    selectedImageStateChange = (newState) => {
+        this.setState({
+            selectedImage: newState.selectedImage
+        })
+    };
     render(){
+        // console.log(this.state.boards)
         return (
             <div>
             <h1>BoardContainer</h1>
             <BoardDetail boards={ this.state.boards } />
-            <MakeBoard createBoard={ this.createBoard } createImage={ this.createImage } />
-            <Search />
+            <MakeBoard createBoard={ this.createBoard } createImage={ this.createImage } selectedImageStateChange={ this.selectedImageStateChange } />
             </div>
         )
     }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Search from './Search';
 
 class MakeBoard extends Component {
     constructor(){
@@ -6,10 +7,8 @@ class MakeBoard extends Component {
         this.state = {
             title: "",
             description: "",
-            images: ["https://images.unsplash.com/photo-1557517397-0a59115272ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80", 
-            "https://images.unsplash.com/photo-1557515294-ce41dbb4f259?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=975&q=80", 
-            "https://images.unsplash.com/photo-1557411197-336ed936e9fa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1088&q=80"],
-            imageSearchTerm: ""
+            images: [],
+            selectedImage: {}
         }
     };
     handleChange = (e) => {
@@ -18,20 +17,29 @@ class MakeBoard extends Component {
         })
     };
     handleSubmit = (e) => {
-        // e.preventDefault;
-        // e.target.reset();
         this.setState({
             name: null,
             description: null
         })
         this.props.createBoard(this.state);
     };
-    handleSearchSubmit = (e) => {
+    imageStateChange = (newState) => {
         this.setState({
-            images: [...this.state.images, this.state.imageSearchTerm]
+            images: newState.images
         })
     };
+    handleImageClick = (e) => {
+        // take an images url and save it to the board
+        console.log(e.target)
+        this.setState({
+            selectedImage: e.target
+        })
+        this.props.selectedImageStateChange(this.state);
+        this.props.createImage();
+    };
+
     render(){
+        // console.log(this.state.selectedImage, 'this.state.selectedImage')
         return (
             <div>
                 <h1>Create a New Board</h1>
@@ -49,15 +57,9 @@ class MakeBoard extends Component {
                         <small>* required</small>
                     </div>
                 </form>
-                <form onSubmit={ this.handleSearchSubmit }>
                     <div>
-                        Search for images: <input onChange={ this.handleChange } type="text" name="imageSearchTerm" />
+                        <Search imageStateChange={ this.imageStateChange } handleImageClick= { this.handleImageClick } />
                     </div>
-                    <div>
-                        <input type="submit" />
-                    </div>
-
-                </form>
             </div>
 
         )

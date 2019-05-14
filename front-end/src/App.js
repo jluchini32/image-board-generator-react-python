@@ -57,17 +57,17 @@ class App extends Component {
       const parsedLoginResponse = await loginUser.json();
       console.log(parsedLoginResponse);
       if(parsedLoginResponse.status === 200){
+        console.log(this.state, 'this.state at login')
         this.setState({
           loggedIn: true,
-          currentUser: parsedLoginResponse.data
+          currentUser: parsedLoginResponse.data,
         })
       }
-
     }catch(err){
       console.log(err);
     }
-
   };
+  // NOT WORKING
   logout = async () => {
     console.log('logout');
     try{
