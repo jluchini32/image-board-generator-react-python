@@ -34,6 +34,20 @@ router.post('/', async (req, res) => {
             data: err
         })
     }
+});
+
+// edit
+router.put('/:id', async (req, res) => {
+    try{
+        const updatedBoard = await Board.findByIdAndUpdate(req.params.id, req.body)
+        await updatedBoard.save();
+    }catch(err){
+        console.log(err);
+        res.json({
+            status: 500,
+            data: err
+        })    
+    }
 })
 
 module.exports = router;

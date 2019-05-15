@@ -20,10 +20,8 @@ class BoardContainer extends Component {
         const boardsJSON = await boards.json();
         this.setState({
             boards: boardsJSON.data,
-            images: [...boardsJSON.data]
         })
     };
-    // HERE
     createBoard = async (formData) => {
         const newBoard = await fetch('http://localhost:9000/boards', {
             credentials: 'include',
@@ -46,13 +44,48 @@ class BoardContainer extends Component {
             selectedImage: newState.selectedImage
         })
     };
+    imageStateChange = (newState) => {
+        this.setState({
+            images: newState.images
+        })
+    };
+    updateBoard = async (id, board) => {
+        board = await fetch(`http://localhost:9000/boards${id}`, {
+            method: "PUT",
+            body: JSON.stringify(board),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        const updatedBoard = await board.json();
+        console.log(updatedBoard, 'updatedBoard')
+        this.setState({
+            boards: [...this.state.boards, updatedBoard.data],
+        })
+    }; 
+    handleImageClick = (e, image) => {
+        // take an images url and save it to the board
+        this.setState({
+            selectedImage: e
+        })
+        // this.selectedImageStateChange(this.state);
+        this.imageStateChange(this.state);
+        this.updateBoard(this.state);
+    };
+    addNewImageButtonClick = (e, id) => {
+        this.state.boards.map((board) => {
+            console.log(board._id, "add new image button clicked")
+        })
+    }
+
     render(){
-        // console.log(this.state.boards)
+        console.log(this.state.boards)
+        console.log(this.state.selectedImage)
         return (
             <div>
             <h1>BoardContainer</h1>
-            <BoardDetail boards={ this.state.boards } />
-            <MakeBoard createBoard={ this.createBoard } createImage={ this.createImage } selectedImageStateChange={ this.selectedImageStateChange } />
+            <BoardDetail boards={ this.state.boards } addNewImageButtonClick={ this.addNewImageButtonClick } />
+            <MakeBoard createBoard={ this.createBoard } selectedImageStateChange={ this.selectedImageStateChange } handleImageClick={ this.handleImageClick } imageStateChange={ this.imageStateChange } />
             </div>
         )
     }

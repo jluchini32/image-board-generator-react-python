@@ -62,7 +62,7 @@ class Search extends Component {
                     <button type="submit">SUBMIT</button></h3>
                 </form>
                 
-                <SearchResults images={ this.state.images } handleImageClick = { this.props.handleImageClick } />
+                <SearchResults images={ this.state.images } handleImageClick = { this.props.handleImageClick }  />
             </div>
         )
     };

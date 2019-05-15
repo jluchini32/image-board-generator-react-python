@@ -15,6 +15,8 @@ class BoardDetail extends Component {
                     <div>{ board.title }</div>
                     <div>{ board.description }</div>
                     <ImageList images = { board.images }/>
+                    {/* onClick should pop up search modal */}
+                    <button onClick={ this.props.addNewImageButtonClick }>Add New Image</button>
                 </div>
             )
         });   
