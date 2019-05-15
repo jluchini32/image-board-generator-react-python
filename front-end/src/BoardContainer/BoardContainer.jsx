@@ -23,6 +23,7 @@ class BoardContainer extends Component {
             images: [...boardsJSON.data]
         })
     };
+    // HERE
     createBoard = async (formData) => {
         const newBoard = await fetch('http://localhost:9000/boards', {
             credentials: 'include',
@@ -39,14 +40,6 @@ class BoardContainer extends Component {
                 boards: [...this.state.boards, parsedResponse]
             })
         }
-    };
-    // finish refactoring for image click
-    createImage = () => {
-        const newImage = this.state.boards.map((board) => {
-            this.setState({
-                [board.images]: [...this.state.board.images, this.state.selectedImage]
-            })
-        })
     };
     selectedImageStateChange = (newState) => {
         this.setState({

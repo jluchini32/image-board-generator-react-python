@@ -16,6 +16,7 @@ class MakeBoard extends Component {
             [e.target.name] : e.target.value
         })
     };
+    // HERE
     handleSubmit = (e) => {
         this.setState({
             name: null,
@@ -28,18 +29,19 @@ class MakeBoard extends Component {
             images: newState.images
         })
     };
-    handleImageClick = (e) => {
+    // HERE
+    handleImageClick = (e, image) => {
         // take an images url and save it to the board
-        console.log(e.target)
+        console.log(e)
         this.setState({
-            selectedImage: e.target
+            selectedImage: e
         })
         this.props.selectedImageStateChange(this.state);
-        this.props.createImage();
+        this.props.createBoard(this.state);
     };
 
     render(){
-        // console.log(this.state.selectedImage, 'this.state.selectedImage')
+        console.log(this.state.selectedImage, 'this.state.selectedImage')
         return (
             <div>
                 <h1>Create a New Board</h1>
@@ -56,10 +58,11 @@ class MakeBoard extends Component {
                     <div>
                         <small>* required</small>
                     </div>
-                </form>
                     <div>
                         <Search imageStateChange={ this.imageStateChange } handleImageClick= { this.handleImageClick } />
                     </div>
+                    </form>
+
             </div>
 
         )

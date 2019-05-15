@@ -4,7 +4,7 @@ class SearchResults extends Component {
     render(){
         const searchResultsList = this.props.images.map((image, i) => {
             return(
-                <img onClick={ this.props.handleImageClick } key= { i } alt="" src={ image } />
+                <img onClick={ () => this.props.handleImageClick(image) } key= { i } alt="" src={ image } />
             )
         })
         return(
