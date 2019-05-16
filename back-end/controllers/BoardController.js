@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const cors = require('cors');
 const Board = require('../models/Board');
 
 // index
@@ -7,8 +6,8 @@ router.get('/', async (req, res) => {
     try{
         const boards = await Board.find({});
         res.json({
-            data: boards,
-            status: 200
+            status: 200,
+            data: boards
         })
 
     } catch(err){
@@ -20,7 +19,7 @@ router.get('/', async (req, res) => {
 });
 
 // new
-router.post('/', cors(), async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const newBoard = await Board.create(req.body);
         res.json({
@@ -38,14 +37,13 @@ router.post('/', cors(), async (req, res) => {
 });
 
 // edit
-router.put('/:id', cors(), async (req, res) => {
-    console.log('backend edit', req.body);
+router.put('/:id', async (req, res) => {
     try{
         const updatedBoard = await Board.findByIdAndUpdate(req.params.id, req.body, {new: true})
         await updatedBoard.save();
         res.json({
-            data: updatedBoard,
-            status: 200
+            status: 200,
+            data: updatedBoard
         })
     }catch(err){
         console.log(err);
@@ -53,6 +51,26 @@ router.put('/:id', cors(), async (req, res) => {
             status: 500,
             data: err
         })    
+    }
+});
+
+// delete
+router.delete('/:id', async (req, res) => {
+    console.log('delete route');
+    try{
+        const deletedBoard = await Board.findByIdAndDelete(req.params.id);
+        await updatedBoard.save();
+        res.json({
+            status: 200,
+            data: deletedBoard
+        })
+
+    }catch(err){
+        console.log(err);
+        res.json({
+            status: 500,
+            data: err
+        })
     }
 })
 

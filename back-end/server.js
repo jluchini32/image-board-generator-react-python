@@ -16,7 +16,7 @@ const unsplash = new Unsplash({
   applicationId: "1fe232c10d045efb942c686798a897086057edb740c100d8ee47adf69d77c998",
   secret: "8e580bcf031fd093e5d435b4451b9fa0f05d7bb74eba277608d04fef202f284e"
 });
-const whitelist = ["http://localhost:9000", "http://localhost:3000", "https://api.unsplash.com/search/photos"];
+const whitelist = ["http://localhost:3000", "https://api.unsplash.com/search/photos"];
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {

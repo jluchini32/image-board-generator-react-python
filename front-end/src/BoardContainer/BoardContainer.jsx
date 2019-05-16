@@ -89,19 +89,55 @@ class BoardContainer extends Component {
         }));
 
     };
-    addNewImageButtonClick = (e, id) => {
+    addNewImageButtonClick = (e) => {
         this.state.boards.map((board) => {
             this.setState({
                 id: e.target.id
             })
             this.toggle();
         })
+        console.log(this.state.id, 'add image')
+    };
+    handleDelete = (e) => {
+        // this.state.boards.map((board) => {
+        //         this.setState({
+        //             id: e.target.id
+        //         })
+        //     if(board._id === this.state.id){
+        //         this.deleteBoard(board, board._id)
+        //     }
+        // });
+    };
+    deleteBoard = async (board, id) => {
+        // try{
+        //     console.log(id, 'id')
+        //     const boardToDelete = await fetch(`http://localhost:9000/boards/${id}`, {
+        //         method: "DELETE"
+        //     });
+        //     console.log(boardToDelete, 'board to delete')
+        //     const parsedResponse = await boardToDelete.json();
+        //     console.log(parsedResponse, 'parsed response')
+        //     if(parsedResponse.status === 200){
+        //         this.setState({
+        //             boards: this.state.boards.filter((board) => {
+        //                 return board._id !== id
+        //             })
+        //         })
+        //     }
+        //     console.log(this.state.boards, 'this.state.boards')
+        // }catch(err){
+        //     console.log(err)
+        // }
+
+
     };
     render(){
+        console.log(this.state.id)
+
         return (
             <div>
             <h1>BoardContainer</h1>
-            <BoardDetail boards={ this.state.boards } addNewImageButtonClick={ this.addNewImageButtonClick } />
+            <BoardDetail boards={ this.state.boards } addNewImageButtonClick={ this.addNewImageButtonClick } handleDelete={ this.handleDelete } deleteBoard={ this.deleteBoard } />
             <MakeBoard createBoard={ this.createBoard } selectedImageStateChange={ this.selectedImageStateChange } 
             handleImageClick={ this.handleImageClick } imageStateChange={ this.imageStateChange } 
             updateBoard={ this.updateBoard } toggle={ this.toggle } modal={ this.state.modal } classChange={ this.state.classChange } 
