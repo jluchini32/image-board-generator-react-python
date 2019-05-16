@@ -15,7 +15,7 @@ class BoardDetail extends Component {
                     <div>{ board.title }</div>
                     <div>{ board.description }</div>
                     <button onClick={ this.props.addNewImageButtonClick } id={ board._id }>Add New Image</button>
-                    <button onClick={ this.props.handleDelete } id={ board._id }>Delete Board</button>
+                    <button id={ board._id }>Delete</button>
                     <ImageList images = { board.images }/>
                 </div>
             )
