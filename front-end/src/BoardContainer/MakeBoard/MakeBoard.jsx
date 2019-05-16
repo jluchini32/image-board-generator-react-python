@@ -23,23 +23,8 @@ class MakeBoard extends Component {
         })
         this.props.createBoard(this.state);
     };
-    imageStateChange = (newState) => {
-        this.setState({
-            images: newState.images
-        })
-    };
-    handleImageClick = (e) => {
-        // take an images url and save it to the board
-        console.log(e.target)
-        this.setState({
-            selectedImage: e.target
-        })
-        this.props.selectedImageStateChange(this.state);
-        this.props.createImage();
-    };
 
     render(){
-        // console.log(this.state.selectedImage, 'this.state.selectedImage')
         return (
             <div>
                 <h1>Create a New Board</h1>
@@ -53,13 +38,17 @@ class MakeBoard extends Component {
                     <div>
                         <input type="submit" />
                     </div>
+                    </form>
+
                     <div>
                         <small>* required</small>
                     </div>
-                </form>
                     <div>
-                        <Search imageStateChange={ this.imageStateChange } handleImageClick= { this.handleImageClick } />
+                        <Search imageStateChange={ this.props.imageStateChange } handleImageClick={ this.props.handleImageClick } 
+                        updateBoard={ this.props.updateBoard } toggle={ this.props.toggle } modal={ this.props.modal } 
+                        classChange={ this.props.classChange } handleEditSubmit={ this.props.handleEditSubmit } results={ this.state.results } />
                     </div>
+
             </div>
 
         )
