@@ -5,18 +5,17 @@ class BoardDetail extends Component {
     constructor(){
         super();
         this.state = {
-            images: []
+            id: ""
         }
     }
     render(){
         const boardsList = this.props.boards.map((board, i) => {
             return (
-                <div key={ board._id } className="parent">
+                <div key={ board._id } id={ board._id } className="parent">
                     <div>{ board.title }</div>
                     <div>{ board.description }</div>
                     <ImageList images = { board.images }/>
-                    {/* onClick should pop up search modal */}
-                    <button onClick={ this.props.addNewImageButtonClick }>Add New Image</button>
+                    <button onClick={ this.props.addNewImageButtonClick } id={ board._id }>Add New Image</button>
                 </div>
             )
         });   

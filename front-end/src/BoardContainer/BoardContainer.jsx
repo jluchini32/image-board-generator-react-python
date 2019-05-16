@@ -6,9 +6,13 @@ class BoardContainer extends Component {
     constructor(){
         super();
         this.state = {
+            classChange: false,
+            modal: false,
             boards: [],
-            selectedImage: {}
+            selectedImage: {},
+            id: "",
         }
+        this.toggle = this.toggle.bind(this);
     }
     componentDidMount(){
         this.getBoards();
@@ -44,48 +48,64 @@ class BoardContainer extends Component {
             selectedImage: newState.selectedImage
         })
     };
-    imageStateChange = (newState) => {
+    handleEditSubmit = ()=> {
+        this.toggle();
+        this.state.boards.map((board) => {
+            if(board._id === this.state.id){
+                this.updateBoard(board, board._id)
+            }
+        })
         this.setState({
-            images: newState.images
+            selectedImage: {},
         })
     };
-    updateBoard = async (id, board) => {
-        board = await fetch(`http://localhost:9000/boards${id}`, {
+    updateBoard = async (foundBoard, id) => {
+        foundBoard.images.push(this.state.selectedImage);
+        const response = await fetch(`http://localhost:9000/boards/${id}`, {
             method: "PUT",
-            body: JSON.stringify(board),
+            mode: 'cors',
+            body: JSON.stringify(foundBoard),
             headers: {
                 "Content-Type": "application/json"
             }
         })
-        const updatedBoard = await board.json();
-        console.log(updatedBoard, 'updatedBoard')
-        this.setState({
-            boards: [...this.state.boards, updatedBoard.data],
-        })
+        console.log(response)
     }; 
+    toggleClass = () => {
+        // console.log(this.state.classChange, 'toggle class');
+        this.setState({
+            classChange: true
+        })
+    };
     handleImageClick = (e, image) => {
-        // take an images url and save it to the board
         this.setState({
             selectedImage: e
         })
-        // this.selectedImageStateChange(this.state);
-        this.imageStateChange(this.state);
-        this.updateBoard(this.state);
+        this.toggleClass();
+    };
+    toggle(){
+        this.setState(prevState => ({
+            modal: !prevState.modal
+        }));
+
     };
     addNewImageButtonClick = (e, id) => {
         this.state.boards.map((board) => {
-            console.log(board._id, "add new image button clicked")
+            this.setState({
+                id: e.target.id
+            })
+            this.toggle();
         })
-    }
-
+    };
     render(){
-        console.log(this.state.boards)
-        console.log(this.state.selectedImage)
         return (
             <div>
             <h1>BoardContainer</h1>
             <BoardDetail boards={ this.state.boards } addNewImageButtonClick={ this.addNewImageButtonClick } />
-            <MakeBoard createBoard={ this.createBoard } selectedImageStateChange={ this.selectedImageStateChange } handleImageClick={ this.handleImageClick } imageStateChange={ this.imageStateChange } />
+            <MakeBoard createBoard={ this.createBoard } selectedImageStateChange={ this.selectedImageStateChange } 
+            handleImageClick={ this.handleImageClick } imageStateChange={ this.imageStateChange } 
+            updateBoard={ this.updateBoard } toggle={ this.toggle } modal={ this.state.modal } classChange={ this.state.classChange } 
+            handleEditSubmit={ this.handleEditSubmit } />
             </div>
         )
     }

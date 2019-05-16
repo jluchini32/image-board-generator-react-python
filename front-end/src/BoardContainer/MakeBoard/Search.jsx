@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import SearchResults from './SearchResults';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 class Search extends Component {
     constructor(){
@@ -12,6 +13,7 @@ class Search extends Component {
             currentPage: 1
         }
     };
+
     searchImages = () => {
         Axios({
           method: 'get',
@@ -23,8 +25,8 @@ class Search extends Component {
             page: this.state.currentPage,
           }
         })
-        .then(reponse => {
-            this.setState({results: reponse.data});
+        .then(response => {
+            this.setState({results: response.data});
           })
         .then(showResults => {
             this.handleSearchResults();
@@ -46,23 +48,33 @@ class Search extends Component {
                 images: [...this.state.images, result.urls.regular]
             })
         })
-        this.props.imageStateChange(this.state);
     };
-    handleSubmit = (e) => {
+    handleSubmit = (e, id) => {
         e.preventDefault();
         this.searchImages(this.state);
+        this.setState({
+            search: "",
+            results: []
+        })
     };
 
     render(){
         return (
             <div>
-                <h1>Search</h1>
-                <form onSubmit={ this.handleSubmit }>
-                    <h3>search for images: <input onChange={ this.handleChange } type="text" name="search" placeholder="when in doubt, search for cats"/>
-                    <button type="submit">SUBMIT</button></h3>
-                </form>
-                
-                <SearchResults images={ this.state.images } handleImageClick = { this.props.handleImageClick }  />
+                <Modal isOpen={ this.props.modal } toggle={ this.props.toggle }>
+                <ModalHeader toggle={ this.props.toggle }>Search for Images</ModalHeader>
+                <ModalBody>
+                    <form onSubmit={ this.handleSubmit }>
+                        <input onChange={ this.handleChange } type="text" name="search" placeholder="when in doubt, search for cats"/>
+                        <h3><button type="submit">SUBMIT</button></h3>
+                    </form>
+                <SearchResults images={ this.state.images } handleImageClick = { this.props.handleImageClick } classChange={ this.classChange }  />
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="primary" onClick={ this.props.handleEditSubmit }>Add to Board</Button>{' '}
+                    <Button color="secondary" onClick={ this.props.toggle }>Cancel</Button>
+                </ModalFooter>
+                </Modal>
             </div>
         )
     };

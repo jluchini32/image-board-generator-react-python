@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const cors = require('cors');
 const Board = require('../models/Board');
 
 // index
@@ -19,7 +20,7 @@ router.get('/', async (req, res) => {
 });
 
 // new
-router.post('/', async (req, res) => {
+router.post('/', cors(), async (req, res) => {
     try {
         const newBoard = await Board.create(req.body);
         res.json({
@@ -37,10 +38,15 @@ router.post('/', async (req, res) => {
 });
 
 // edit
-router.put('/:id', async (req, res) => {
+router.put('/:id', cors(), async (req, res) => {
+    console.log('backend edit', req.body);
     try{
-        const updatedBoard = await Board.findByIdAndUpdate(req.params.id, req.body)
+        const updatedBoard = await Board.findByIdAndUpdate(req.params.id, req.body, {new: true})
         await updatedBoard.save();
+        res.json({
+            data: updatedBoard,
+            status: 200
+        })
     }catch(err){
         console.log(err);
         res.json({

@@ -25,7 +25,6 @@ class MakeBoard extends Component {
     };
 
     render(){
-        console.log(this.state.selectedImage, 'this.state.selectedImage')
         return (
             <div>
                 <h1>Create a New Board</h1>
@@ -45,7 +44,9 @@ class MakeBoard extends Component {
                         <small>* required</small>
                     </div>
                     <div>
-                        <Search imageStateChange={ this.props.imageStateChange } handleImageClick= { this.props.handleImageClick } />
+                        <Search imageStateChange={ this.props.imageStateChange } handleImageClick={ this.props.handleImageClick } 
+                        updateBoard={ this.props.updateBoard } toggle={ this.props.toggle } modal={ this.props.modal } 
+                        classChange={ this.props.classChange } handleEditSubmit={ this.props.handleEditSubmit } />
                     </div>
 
             </div>
