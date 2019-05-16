@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import BoardContainer from './BoardContainer/BoardContainer';
-import Profile from './Profile/Profile';
-import UserContainer from './UserContainer/UserContainer';
+// import Profile from './Profile/Profile';
+// import UserContainer from './UserContainer/UserContainer';
 
 class App extends Component {
   constructor(){
@@ -90,7 +90,7 @@ class App extends Component {
     // console.log(this.state, 'this.state app.js')
     return (
       <div className="App">
-      <nav>
+      {/* <nav>
         <button onClick={() =>  this.logout } type="submit">Logout</button>
       </nav>
         <div>
@@ -98,7 +98,7 @@ class App extends Component {
         </div>
         <hr />
           <Profile handleRegister={ this.handleRegister } />
-        <hr />
+        <hr /> */}
         <div>
           <BoardContainer />
         </div>

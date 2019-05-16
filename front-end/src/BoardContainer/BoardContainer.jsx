@@ -12,9 +12,12 @@ class BoardContainer extends Component {
             selectedImage: {},
             id: "",
             deleteBoardId: "",
+            containerId: ""
+
         }
         this.toggle = this.toggle.bind(this);
     }
+
     componentDidMount(){
         this.getBoards();
     };
@@ -38,11 +41,10 @@ class BoardContainer extends Component {
                 "Content-Type": "application/json"
             }
         })
-        console.log(newBoard, 'newBoard')
         const parsedResponse = await newBoard.json();
         if(newBoard.status === 200){
             this.setState({
-                boards: [...this.state.boards, parsedResponse]
+                boards: [parsedResponse.data, ...this.state.boards]
             })
         }
     };
@@ -66,17 +68,6 @@ class BoardContainer extends Component {
                 this.updateBoard(board, board._id)
             }
         })
-    };
-
-    updateBoard = async (foundBoard, id) => {
-        foundBoard.images.push(this.state.selectedImage);
-        const response = await fetch(`http://localhost:9000/boards/${id}`, {
-            method: "PUT",
-            body: JSON.stringify(foundBoard),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
     }; 
 
     // toggleClass = () => {
@@ -97,7 +88,6 @@ class BoardContainer extends Component {
         this.setState(prevState => ({
             modal: !prevState.modal
         }));
-
     };
 
     addNewImageButtonClick = (e, id) => {
@@ -105,7 +95,18 @@ class BoardContainer extends Component {
             this.setState({
                 id: e.target.id
             })
-            this.toggle();
+        })
+        this.toggle();
+    };
+
+    updateBoard = async (foundBoard, id) => {
+        foundBoard.images.push(this.state.selectedImage);
+        await fetch(`http://localhost:9000/boards/${id}`, {
+            method: "PUT",
+            body: JSON.stringify(foundBoard),
+            headers: {
+                "Content-Type": "application/json"
+            }
         })
     };
 
@@ -124,13 +125,36 @@ class BoardContainer extends Component {
         })
         if(response.status === 200){
             this.setState({
-                boards: this.state.boards.filter(board => board._id != id)
+                boards: this.state.boards.filter(board => board._id !== id)
             })
         }
     }; 
 
+    deleteImageButtonClick = (e) => {
+        this.setState({
+            containerId: ReactDOM.findDOMNode(this).parentNode.getAttribute("id")
+        })
+        this.state.boards.images.map((image, i) => {
+            if (image[i] === e.target.id){
+                this.deleteImage(image[i])
+            }
+        })
+    };
+
+    // deleteImage = async (image) => {
+    //     console.log(image)
+    //     const response = await fetch(`http://localhost:9000/boards/${id}`, {
+    //         method: "DELETE",
+    //     })
+    //     if(response.status === 200){
+    //         this.setState({
+    //             boards: this.state.boards.filter(board => board._id !== id)
+    //         })
+    //     }
+    // }; 
+
     render(){
-        console.log(this.state.deleteBoardId, 'delete id')
+        console.log(this.state.containerId)
         return (
             <div>
             <MakeBoard createBoard={ this.createBoard } selectedImageStateChange={ this.selectedImageStateChange } 
