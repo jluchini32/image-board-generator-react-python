@@ -71,7 +71,7 @@ class Search extends Component {
                 <SearchResults images={ this.state.images } handleImageClick = { this.props.handleImageClick } classChange={ this.classChange }  />
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={ this.props.handleEditSubmit }>Add to Board</Button>{' '}
+                    <Button color="primary" onClick={ this.props.handleImageSubmit }>Add to Board</Button>{' '}
                     <Button color="secondary" onClick={ this.props.toggle }>Cancel</Button>
                 </ModalFooter>
                 </Modal>

@@ -46,7 +46,7 @@ class MakeBoard extends Component {
                     <div>
                         <Search imageStateChange={ this.props.imageStateChange } handleImageClick={ this.props.handleImageClick } 
                         updateBoard={ this.props.updateBoard } toggle={ this.props.toggle } modal={ this.props.modal } 
-                        classChange={ this.props.classChange } handleEditSubmit={ this.props.handleEditSubmit } results={ this.state.results } />
+                        classChange={ this.props.classChange } handleImageSubmit={ this.props.handleImageSubmit } results={ this.state.results } />
                     </div>
 
             </div>

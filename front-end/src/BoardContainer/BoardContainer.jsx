@@ -11,7 +11,6 @@ class BoardContainer extends Component {
             boards: [],
             selectedImage: {},
             id: "",
-            results: [],
         }
         this.toggle = this.toggle.bind(this);
     }
@@ -36,13 +35,14 @@ class BoardContainer extends Component {
                 "Content-Type": "application/json"
             }
         })
-        // console.log(newBoard, 'newBoard')
+        console.log(newBoard, 'newBoard')
         const parsedResponse = await newBoard.json();
         if(newBoard.status === 200){
             this.setState({
                 boards: [...this.state.boards, parsedResponse]
             })
         }
+        this.toggle();
     };
     selectedImageStateChange = (newState) => {
         this.setState({
@@ -54,15 +54,12 @@ class BoardContainer extends Component {
             images: newState.images
         })
     };
-    handleEditSubmit = ()=> {
+    handleImageSubmit = ()=> {
         this.toggle();
         this.state.boards.map((board) => {
             if(board._id === this.state.id){
                 this.updateBoard(board, board._id)
             }
-        })
-        this.setState({
-            results: []
         })
     };
     updateBoard = async (foundBoard, id) => {
@@ -75,20 +72,18 @@ class BoardContainer extends Component {
                 "Content-Type": "application/json"
             }
         })
-        console.log(response)
-
     }; 
-    toggleClass = () => {
-        // console.log(this.state.classChange, 'toggle class');
-        this.setState({
-            classChange: true
-        })
-    };
+    // toggleClass = () => {
+    //     // console.log(this.state.classChange, 'toggle class');
+    //     this.setState({
+    //         classChange: true
+    //     })
+    // };
     handleImageClick = (e, image) => {
         this.setState({
             selectedImage: e
         })
-        this.toggleClass();
+        // this.toggleClass();
     };
     toggle(){
         this.setState(prevState => ({
@@ -111,7 +106,7 @@ class BoardContainer extends Component {
             <MakeBoard createBoard={ this.createBoard } selectedImageStateChange={ this.selectedImageStateChange } 
             handleImageClick={ this.handleImageClick } imageStateChange={ this.imageStateChange } 
             updateBoard={ this.updateBoard } toggle={ this.toggle } modal={ this.state.modal } classChange={ this.state.classChange } 
-            handleEditSubmit={ this.handleEditSubmit } results={ this.state.results } />            
+            handleImageSubmit={ this.handleImageSubmit } results={ this.state.results } />            
             
             <BoardDetail boards={ this.state.boards } addNewImageButtonClick={ this.addNewImageButtonClick } />
             </div>
