@@ -12,10 +12,6 @@ class BoardContainer extends Component {
             boards: [],
             selectedImage: {},
             id: "",
-            deleteBoardId: "",
-            containerId: "",
-            deletedImageId: ""
-
         }
         this.toggle = this.toggle.bind(this);
     }
@@ -120,6 +116,18 @@ class BoardContainer extends Component {
         })
     };
 
+    deleteBoard = async (id) => {
+        console.log(id)
+        const response = await fetch(`http://localhost:9000/boards/${id}`, {
+            method: "DELETE",
+        })
+        if(response.status === 200){
+            this.setState({
+                boards: this.state.boards.filter(board => board._id != id)
+            })
+        }
+    }; 
+
     updateBoardAfterDelete = async (board) => {
         const response = await fetch(`http://localhost:9000/boards/${board._id}`, {
             method: "PUT",
@@ -145,8 +153,6 @@ class BoardContainer extends Component {
 
 
     render(){
-        console.log(this.state.boards)
-
         return (
             <div>
             <MakeBoard createBoard={ this.createBoard } selectedImageStateChange={ this.selectedImageStateChange } 

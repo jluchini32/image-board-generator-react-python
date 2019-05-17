@@ -65,7 +65,7 @@ class Search extends Component {
                 <ModalHeader toggle={ this.props.toggle }>Search for Images</ModalHeader>
                 <ModalBody>
                     <form onSubmit={ this.handleSubmit }>
-                        <input onChange={ this.handleChange } type="text" name="search" placeholder="when in doubt, search for cats"/>
+                        <input onChange={ this.handleChange } type="text" name="search" value=""/>
                         <h3><button type="submit">SUBMIT</button></h3>
                     </form>
                 <SearchResults images={ this.state.images } handleImageClick = { this.props.handleImageClick } classChange={ this.classChange }  />
