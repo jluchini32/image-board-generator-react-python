@@ -42,6 +42,7 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
       },
 }))
+
 app.use(morgan('short'));
 app.use(bodyParser.json());
 // app.use((req, res, next)=>{
