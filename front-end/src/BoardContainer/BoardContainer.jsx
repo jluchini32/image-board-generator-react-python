@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import MakeBoard from './MakeBoard/MakeBoard';
 import BoardDetail from './BoardDetail/BoardDetail';
 
@@ -12,7 +13,8 @@ class BoardContainer extends Component {
             selectedImage: {},
             id: "",
             deleteBoardId: "",
-            containerId: ""
+            containerId: "",
+            deletedImageId: ""
 
         }
         this.toggle = this.toggle.bind(this);
@@ -31,7 +33,7 @@ class BoardContainer extends Component {
             boards: boardsJSON.data,
         })
     };
-    // fix bug that doesn't allow modal toggle
+
     createBoard = async (formData) => {
         const newBoard = await fetch('http://localhost:9000/boards', {
             credentials: 'include',
@@ -118,43 +120,33 @@ class BoardContainer extends Component {
         })
     };
 
-    deleteBoard = async (id) => {
-        console.log(id)
-        const response = await fetch(`http://localhost:9000/boards/${id}`, {
-            method: "DELETE",
+    updateBoardAfterDelete = async (board) => {
+        const response = await fetch(`http://localhost:9000/boards/${board._id}`, {
+            method: "PUT",
+            body: JSON.stringify(board),
+            headers: {
+                "Content-Type": "application/json"
+            }
         })
         if(response.status === 200){
             this.setState({
-                boards: this.state.boards.filter(board => board._id !== id)
+                boards: [...this.state.boards, board]
             })
         }
-    }; 
-
-    deleteImageButtonClick = (e) => {
-        this.setState({
-            containerId: ReactDOM.findDOMNode(this).parentNode.getAttribute("id")
-        })
-        this.state.boards.images.map((image, i) => {
-            if (image[i] === e.target.id){
-                this.deleteImage(image[i])
-            }
-        })
     };
 
-    // deleteImage = async (image) => {
-    //     console.log(image)
-    //     const response = await fetch(`http://localhost:9000/boards/${id}`, {
-    //         method: "DELETE",
-    //     })
-    //     if(response.status === 200){
-    //         this.setState({
-    //             boards: this.state.boards.filter(board => board._id !== id)
-    //         })
-    //     }
-    // }; 
+    deleteImageButtonClick = async (board, image, i) => {
+        if(board.images[i] === image){
+            board.images.splice(image, 1)
+        };        
+        this.updateBoardAfterDelete(board);
+    }; 
+
+
 
     render(){
-        console.log(this.state.containerId)
+        console.log(this.state.boards)
+
         return (
             <div>
             <MakeBoard createBoard={ this.createBoard } selectedImageStateChange={ this.selectedImageStateChange } 
@@ -163,7 +155,7 @@ class BoardContainer extends Component {
             handleImageSubmit={ this.handleImageSubmit } results={ this.state.results } />            
             
             <BoardDetail boards={ this.state.boards } addNewImageButtonClick={ this.addNewImageButtonClick } 
-            deleteBoardButtonClick={ this.deleteBoardButtonClick } />
+            deleteBoardButtonClick={ this.deleteBoardButtonClick } deleteImageButtonClick= { this.deleteImageButtonClick } />
             </div>
         )
     }

@@ -10,9 +10,9 @@ class ImageList extends Component {
     render(){
         const imageList1 = this.props.images.map((image, i) => {
             return(
-                <div key={ i }>
+                <div key={ i } className="images">
                     <div><img alt="" key={ i } src={ image } /></div>
-                    <div><button onClick={ this.props.deleteImageButtonClick } id={ image }>Delete Image</button></div>
+                    <div><button onClick={ ( ) => this.props.deleteImageButtonClick(this.props.board, image, i) } id={ image }>Delete Image</button></div>
                 </div>
             )
         })

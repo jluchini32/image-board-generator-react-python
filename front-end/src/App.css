@@ -34,3 +34,6 @@
 img {
   width: 33%;
 }
+.images {
+  display: inline;
+}
