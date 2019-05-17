@@ -53,7 +53,7 @@ router.put('/:id', async (req, res) => {
         })    
     }
 });
-// new put route?
+
 // delete
 router.delete('/:id', async (req, res) => {
     console.log('delete route');

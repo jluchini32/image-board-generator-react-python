@@ -9,11 +9,14 @@ class BoardContainer extends Component {
         this.state = {
             classChange: false,
             modal: false,
+            editModal: false,
             boards: [],
             selectedImage: {},
             id: "",
+            editBoardId: ""
         }
         this.toggle = this.toggle.bind(this);
+        this.toggleEdit = this.toggleEdit.bind(this);
     }
 
     componentDidMount(){
@@ -53,12 +56,6 @@ class BoardContainer extends Component {
         })
     };
 
-    imageStateChange = (newState) => {
-        this.setState({
-            images: newState.images
-        })
-    };
-
     handleImageSubmit = ()=> {
         this.toggle();
         this.state.boards.map((board) => {
@@ -85,6 +82,12 @@ class BoardContainer extends Component {
     toggle(){
         this.setState(prevState => ({
             modal: !prevState.modal
+        }));
+    };
+
+    toggleEdit(){
+        this.setState(prevState => ({
+            editModal: !prevState.editModal
         }));
     };
 
@@ -150,7 +153,39 @@ class BoardContainer extends Component {
         this.updateBoardAfterDelete(board);
     }; 
 
+    // change add new image to this?
+    editBoardButtonClick = (e) => {
+        this.setState({
+            editBoardId: e.target.id
+        })
+        this.toggleEdit();
+    };
 
+    handleEditSubmit = (text) => {
+        this.state.boards.map((board) => {
+            if (board._id === this.state.editBoardId){
+                this.editBoard(text, board)
+            }
+        })
+    };
+
+    // figure out why this is working but breaking image loop
+    editBoard = async (text, board) => {
+        console.log(text)
+        console.log(board)
+        const response = await fetch(`http://localhost:9000/boards/${this.state.editBoardId}`, {
+            method: "PUT",
+            body: JSON.stringify(text),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        if(response.status === 200){
+            this.setState({
+                boards: [...this.state.boards, text]
+            })
+        }
+    }; 
 
     render(){
         return (
@@ -158,10 +193,12 @@ class BoardContainer extends Component {
             <MakeBoard createBoard={ this.createBoard } selectedImageStateChange={ this.selectedImageStateChange } 
             handleImageClick={ this.handleImageClick } imageStateChange={ this.imageStateChange } 
             updateBoard={ this.updateBoard } toggle={ this.toggle } modal={ this.state.modal } classChange={ this.state.classChange } 
-            handleImageSubmit={ this.handleImageSubmit } results={ this.state.results } />            
+            handleImageSubmit={ this.handleImageSubmit } />            
             
             <BoardDetail boards={ this.state.boards } addNewImageButtonClick={ this.addNewImageButtonClick } 
-            deleteBoardButtonClick={ this.deleteBoardButtonClick } deleteImageButtonClick= { this.deleteImageButtonClick } />
+            deleteBoardButtonClick={ this.deleteBoardButtonClick } deleteImageButtonClick= { this.deleteImageButtonClick }
+            toggleEdit={ this.toggleEdit } editModal={ this.state.editModal } editBoardButtonClick={ this.editBoardButtonClick }
+            handleEditSubmit={ this.handleEditSubmit }  />
             </div>
         )
     }

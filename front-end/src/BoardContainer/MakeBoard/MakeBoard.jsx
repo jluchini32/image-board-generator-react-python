@@ -31,7 +31,7 @@ class MakeBoard extends Component {
                 <h1>Create a New Board</h1>
                 <form onSubmit={ this.handleSubmit }>
                     <div>
-                        *Title: <input onChange={ this.handleChange } type="text" name="title" />
+                        *Title: <input onChange={ this.handleChange } type="text" name="title" placeholder=""/>
                     </div>
                     <div>
                         Description: <input onChange={ this.handleChange } type="text" name="description" />
@@ -47,7 +47,7 @@ class MakeBoard extends Component {
                     <div>
                         <Search imageStateChange={ this.props.imageStateChange } handleImageClick={ this.props.handleImageClick } 
                         updateBoard={ this.props.updateBoard } toggle={ this.props.toggle } modal={ this.props.modal } 
-                        classChange={ this.props.classChange } handleImageSubmit={ this.props.handleImageSubmit } results={ this.state.results } />
+                        classChange={ this.props.classChange } handleImageSubmit={ this.props.handleImageSubmit } clearModal= { this.props.clearModal } />
                     </div>
 
             </div>
