@@ -75,7 +75,7 @@ class Search extends Component {
                 <ModalBody>
                     <form onSubmit={ this.handleSubmit }>
                         <input onChange={ this.handleChange } type="text" name="search" placeholder=""/>
-                        <h3><button type="submit">SUBMIT</button></h3>
+                        <button type="submit">Submit</button>
                     </form>
                 <SearchResults images={ this.state.images } handleImageClick = { this.props.handleImageClick } classChange={ this.classChange }  />
                 </ModalBody>
