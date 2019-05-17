@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ImageList from './ImageList';
 import EditBoard from './EditBoard/EditBoard';
+import { Button } from 'reactstrap';
 
 class BoardDetail extends Component {
     constructor(){
@@ -17,9 +18,9 @@ class BoardDetail extends Component {
                     <hr />
                     <div>{ board.title }</div>
                     <div>{ board.description }</div>
-                    <button onClick={ this.props.addNewImageButtonClick } id={ board._id }>Add New Image</button>
-                    <button id={ board._id } onClick={ this.props.editBoardButtonClick }>Edit Board</button>
-                    <button id={ board._id } onClick={ this.props.deleteBoardButtonClick }>Delete Board</button>
+                    <Button className="button" onClick={ this.props.addNewImageButtonClick } id={ board._id }>Add New Image</Button>
+                    <Button className="button" id={ board._id } onClick={ this.props.editBoardButtonClick }>Edit Board</Button>
+                    <Button className="button" id={ board._id } onClick={ this.props.deleteBoardButtonClick }>Delete Board</Button>
                     <ImageList images = { board.images } deleteImageButtonClick= { this.props.deleteImageButtonClick } board = {board} />
                 </div>
             )

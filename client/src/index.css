@@ -4,7 +4,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-transform: uppercase;
-  letter-spacing: .08em;
+  letter-spacing: .1em;
 }
 
 code {
@@ -15,7 +15,28 @@ code {
 h1, h2, h3 {
   font-family: 'Cormorant Garamond', serif;
   text-transform: uppercase;
-  letter-spacing: 0.08em
+  letter-spacing: 0.1em;
+  color: lightgray;
+  padding: 20px
+}
+
+h4 {
+  font-family: 'Lato', sans-serif;
+  letter-spacing: .7em;
+  color: white;
+  padding: 20px;
+  background: rgba(0,0,0,0.6);
+
+}
+
+p {
+  color: grey
+}
+
+.header {
+  background-image: url('https://source.unsplash.com/random?{texture}');
+  height: 15%;
+  opacity: .7;
 }
 
 #photos {
@@ -73,4 +94,13 @@ input {
   height: auto;
   max-height: 500px;
   min-height: 150px
+} */
+
+.button {
+  margin: 10px
+}
+
+/* .parent {
+  width: 70%;
+  text-align: center
 } */

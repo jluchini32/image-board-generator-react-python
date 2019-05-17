@@ -90,7 +90,9 @@ class App extends Component {
     // console.log(this.state, 'this.state app.js')
     return (
       <div className="App">
-      <h4>a box of thoughts</h4>
+      <div className="header">
+        <h4>a box of thoughts</h4>
+      </div>
       <hr />
         <div>
           <BoardContainer />

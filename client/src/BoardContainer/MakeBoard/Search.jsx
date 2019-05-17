@@ -75,13 +75,13 @@ class Search extends Component {
                 <ModalBody>
                     <form onSubmit={ this.handleSubmit }>
                         <input onChange={ this.handleChange } type="text" name="search" placeholder=""/>
-                        <button type="submit">Submit</button>
+                        <Button color="secondary" className="button" type="submit">Submit</Button>
                     </form>
                 <SearchResults images={ this.state.images } handleImageClick = { this.props.handleImageClick } classChange={ this.classChange }  />
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={ this.props.handleImageSubmit }>Add to Board</Button>{' '}
-                    <Button color="secondary" onClick={ this.props.toggle }>Cancel</Button>
+                    <Button color="secondary" onClick={ this.props.handleImageSubmit }>Add to Board</Button>{' '}
+                    <Button outline color="secondary" onClick={ this.props.toggle }>Cancel</Button>
                 </ModalFooter>
                 </Modal>
             </div>

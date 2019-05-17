@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Search from './Search';
+import { Button } from 'reactstrap';
 
 class MakeBoard extends Component {
     constructor(){
@@ -37,7 +38,7 @@ class MakeBoard extends Component {
                         Description: <input onChange={ this.handleChange } type="text" name="description" />
                     </div>
                     <div>
-                        <input type="submit" />
+                        <Button className="button" color="secondary" type="submit">Submit</Button>
                     </div>
                     </form>
 
