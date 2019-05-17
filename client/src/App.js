@@ -90,15 +90,8 @@ class App extends Component {
     // console.log(this.state, 'this.state app.js')
     return (
       <div className="App">
-      {/* <nav>
-        <button onClick={() =>  this.logout } type="submit">Logout</button>
-      </nav>
-        <div>
-          <UserContainer handleRegister={ this.handleRegister } handleLogin={ this.handleLogin } />
-        </div>
-        <hr />
-          <Profile handleRegister={ this.handleRegister } />
-        <hr /> */}
+      <h4>a box of thoughts</h4>
+      <hr />
         <div>
           <BoardContainer />
         </div>

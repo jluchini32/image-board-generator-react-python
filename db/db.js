@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
-// mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/", {useNewUrlParser: true});
-mongoose.connect("mongodb://localhost/image-board-creator", {
+const connectionString = process.env.MONGODB_URI;
+
+mongoose.connect(connectionString, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false

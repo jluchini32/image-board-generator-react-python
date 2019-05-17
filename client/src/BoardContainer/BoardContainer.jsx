@@ -24,17 +24,19 @@ class BoardContainer extends Component {
     };
 
     getBoards = async () => {
-        const boards = await fetch('http://localhost:9000/boards', {
+        const boards = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/boards`, {
             credentials: 'include'
         })
         const boardsJSON = await boards.json();
+        console.log(boards)
+        console.log(boardsJSON)
         this.setState({
             boards: boardsJSON.data,
         })
     };
 
     createBoard = async (formData) => {
-        const newBoard = await fetch('http://localhost:9000/boards', {
+        const newBoard = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/boards`, {
             credentials: 'include',
             method: "POST",
             body: JSON.stringify(formData),
@@ -102,7 +104,7 @@ class BoardContainer extends Component {
 
     updateBoard = async (foundBoard, id) => {
         foundBoard.images.push(this.state.selectedImage);
-        await fetch(`http://localhost:9000/boards/${id}`, {
+        await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/boards/${id}`, {
             method: "PUT",
             body: JSON.stringify(foundBoard),
             headers: {
@@ -121,7 +123,7 @@ class BoardContainer extends Component {
 
     deleteBoard = async (id) => {
         console.log(id)
-        const response = await fetch(`http://localhost:9000/boards/${id}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/boards/${id}`, {
             method: "DELETE",
         })
         if(response.status === 200){
@@ -132,7 +134,7 @@ class BoardContainer extends Component {
     }; 
 
     updateBoardAfterDelete = async (board) => {
-        const response = await fetch(`http://localhost:9000/boards/${board._id}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/boards/${board._id}`, {
             method: "PUT",
             body: JSON.stringify(board),
             headers: {
@@ -174,7 +176,7 @@ class BoardContainer extends Component {
     editBoard = async (text, board) => {
         console.log(text)
         console.log(board)
-        const response = await fetch(`http://localhost:9000/boards/${this.state.editBoardId}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/boards/${this.state.editBoardId}`, {
             method: "PUT",
             body: JSON.stringify(text),
             headers: {
