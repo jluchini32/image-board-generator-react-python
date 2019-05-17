@@ -167,6 +167,7 @@ class BoardContainer extends Component {
                 this.editBoard(text, board)
             }
         })
+        this.toggleEdit();
     };
 
     // figure out why this is working but breaking image loop
@@ -182,9 +183,10 @@ class BoardContainer extends Component {
         })
         if(response.status === 200){
             this.setState({
-                boards: [...this.state.boards, text]
+                boards: [...this.state.boards, text, board]
             })
         }
+        this.getBoards();
     }; 
 
     render(){
