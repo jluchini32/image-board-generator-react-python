@@ -16,7 +16,7 @@ class BoardDetail extends Component {
             return (
                 <div key={ board._id } id={ board._id } className="parent">
                     <hr />
-                    <div>{ board.title }</div>
+                    <div><h2>{ board.title }</h2></div>
                     <div>{ board.description }</div>
                     <Button className="button" onClick={ this.props.addNewImageButtonClick } id={ board._id }>Add New Image</Button>
                     <Button className="button" id={ board._id } onClick={ this.props.editBoardButtonClick }>Edit Board</Button>

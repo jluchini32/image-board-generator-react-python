@@ -17,8 +17,14 @@ class ImageList extends Component {
             })
         }
         return(
-            <div>
-                { imageList1 }
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-10">
+                        <section id="photos">
+                            { imageList1 }
+                        </section>
+                    </div>
+                </div>
             </div>
         )
     }

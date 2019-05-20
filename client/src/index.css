@@ -5,6 +5,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-transform: uppercase;
   letter-spacing: .1em;
+  color: #666666
 }
 
 code {
@@ -12,12 +13,20 @@ code {
     monospace;
 }
 
-h1, h2, h3 {
+h1 {
   font-family: 'Cormorant Garamond', serif;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: lightgray;
   padding: 20px
+}
+
+h2 {
+  font-family: 'Cormorant Garamond', serif;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #666666;
+  padding: 30px, 0, 0, 0;
 }
 
 h4 {
@@ -26,6 +35,7 @@ h4 {
   color: white;
   padding: 20px;
   background: rgba(0,0,0,0.6);
+  height: 15%;
 
 }
 
@@ -35,13 +45,12 @@ p {
 
 .header {
   background-image: url('https://source.unsplash.com/random?{texture}');
-  height: 15%;
   opacity: .7;
 }
 
 #photos {
   line-height: 0;
-  margin: px;
+  margin: 50px;
   -webkit-column-count: 5;
   -webkit-column-gap:   0px;
   -moz-column-count:    5;
@@ -56,7 +65,7 @@ p {
   /* display: block; */
 }
 
-/* @media (max-width: 1200px) {
+@media (max-width: 1200px) {
   #photos {
   -moz-column-count:    4;
   -webkit-column-count: 4;
@@ -83,24 +92,17 @@ p {
   -webkit-column-count: 1;
   column-count:         1;
   }
-} */
-/* 
-input {
-  font-size: 14px;
 }
 
-.photo-wrapper {
-  width: 100%;
-  height: auto;
-  max-height: 500px;
-  min-height: 150px
-} */
+#center-images {
+  width: 90%;
+  text-align: center
+}
 
 .button {
   margin: 10px
 }
 
-/* .parent {
-  width: 70%;
-  text-align: center
-} */
+#parent {
+  margin-top: 30px
+}
