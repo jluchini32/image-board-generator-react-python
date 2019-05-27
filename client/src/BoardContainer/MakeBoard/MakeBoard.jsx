@@ -19,11 +19,11 @@ class MakeBoard extends Component {
     };
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.createBoard(this.state);
         this.setState({
             title: null,
             description: null
         }) 
+        this.props.createBoard(this.state);
     };
 
     render(){

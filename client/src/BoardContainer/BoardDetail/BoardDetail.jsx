@@ -13,12 +13,12 @@ class BoardDetail extends Component {
     };
 
     render(){
-        const boardsList = this.props.boards.map((board, i) => {
+        this.props.boards.map((board, i) => {
             if(board._id == this.props.showBoards[i]){
                 this.state.usersBoardsToShow.push(board)
             }
         })
-        const boardsToShow = this.state.usersBoardsToShow.map((board, i) => {
+        const boardsList = this.state.usersBoardsToShow.map((board, i) => {
             return (
                 <div key={ i } id={ board._id } className="parent">
                     <div><h2>{ board.title }</h2></div>
@@ -36,7 +36,7 @@ class BoardDetail extends Component {
                     <EditBoard toggleEdit={ this.props.toggleEdit } editModal={ this.props.editModal } handleEditSubmit={ this.props.handleEditSubmit } />
                 </div>
                 <div>
-                    { boardsToShow }
+                    { boardsList }
                 </div>
             </div>
         )

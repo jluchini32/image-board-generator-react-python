@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import BoardContainer from './BoardContainer/BoardContainer';
-// import Profile from './Profile/Profile';
 import UserContainer from './UserContainer/UserContainer';
 
 class App extends Component {
@@ -9,7 +8,8 @@ class App extends Component {
     super();
     this.state = {
       loggedIn: false,
-      currentUser: null
+      currentUser: null,
+      boards: []
     }
   }
   handleRegister = async (formData) => {
@@ -24,6 +24,7 @@ class App extends Component {
         }
       })
       const parsedResponse = await newUser.json();
+      console.log(parsedResponse, 'parsedResponse register')
       if(parsedResponse.status === 200){
         this.setState({
           loggedIn: true,
@@ -84,8 +85,27 @@ class App extends Component {
     }
 
   };
+  createBoard = async (formData) => {
+    const newBoard = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/boards`, {
+        credentials: 'include',
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    console.log(newBoard, 'newBoard')
+    const parsedResponse = await newBoard.json();
+    console.log(parsedResponse, 'parsedResponse')
+    if(newBoard.status === 200){
+        this.setState({
+            boards: [...this.state.boards, parsedResponse.data]
+        })
+    }
+  };
   render(){
     console.log(this.state.currentUser, 'current user')
+    console.log(this.state.boards, 'boards app')
     return (
       <div className="App">
       <div className="header">
@@ -94,7 +114,7 @@ class App extends Component {
         <div>
           {
             this.state.loggedIn ?
-            <BoardContainer showBoards={ this.state.currentUser.boards } />
+            <BoardContainer showBoards={ this.state.currentUser.boards } createBoard={ this.createBoard } />
             :
             <UserContainer handleRegister={ this.handleRegister } handleLogin={ this.handleLogin } handleEditProfile={ this.handleEditProfile } />
           }
