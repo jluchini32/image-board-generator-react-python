@@ -11,6 +11,10 @@ class Login extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.handleLogin(this.state);
+        this.setState({
+            username: "",
+            password: ""
+        })
     };
     handleChange = (e) => {
         this.setState({

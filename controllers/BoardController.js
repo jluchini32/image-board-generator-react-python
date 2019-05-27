@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Board = require('../models/Board');
+const User = require('../models/User')
 
 // index
 router.get('/', async (req, res) => {
@@ -22,9 +23,15 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const newBoard = await Board.create(req.body);
+        const user = await User.findById(req.session.usersId)
+        if(user){
+            user.boards.push(newBoard)
+        }
+        await user.save()
         res.json({
             status: 200,
-            data: newBoard
+            data: newBoard,
+            
         })
 
     } catch(err){

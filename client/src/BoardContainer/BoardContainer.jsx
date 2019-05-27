@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import MakeBoard from './MakeBoard/MakeBoard';
 import BoardDetail from './BoardDetail/BoardDetail';
 
@@ -28,8 +27,6 @@ class BoardContainer extends Component {
             credentials: 'include'
         })
         const boardsJSON = await boards.json();
-        console.log(boards)
-        console.log(boardsJSON)
         this.setState({
             boards: boardsJSON.data,
         })
@@ -128,7 +125,7 @@ class BoardContainer extends Component {
         })
         if(response.status === 200){
             this.setState({
-                boards: this.state.boards.filter(board => board._id != id)
+                boards: this.state.boards.filter(board => board._id !== id)
             })
         }
     }; 
@@ -192,17 +189,18 @@ class BoardContainer extends Component {
     }; 
 
     render(){
+        console.log(this.props.showBoards)
         return (
-            <div>
-            <MakeBoard createBoard={ this.createBoard } selectedImageStateChange={ this.selectedImageStateChange } 
-            handleImageClick={ this.handleImageClick } imageStateChange={ this.imageStateChange } 
-            updateBoard={ this.updateBoard } toggle={ this.toggle } modal={ this.state.modal } classChange={ this.state.classChange } 
-            handleImageSubmit={ this.handleImageSubmit } />            
-            
-            <BoardDetail boards={ this.state.boards } addNewImageButtonClick={ this.addNewImageButtonClick } 
-            deleteBoardButtonClick={ this.deleteBoardButtonClick } deleteImageButtonClick= { this.deleteImageButtonClick }
-            toggleEdit={ this.toggleEdit } editModal={ this.state.editModal } editBoardButtonClick={ this.editBoardButtonClick }
-            handleEditSubmit={ this.handleEditSubmit }  />
+            <div>   
+                <MakeBoard createBoard={ this.createBoard } selectedImageStateChange={ this.selectedImageStateChange } 
+                handleImageClick={ this.handleImageClick } imageStateChange={ this.imageStateChange } 
+                updateBoard={ this.updateBoard } toggle={ this.toggle } modal={ this.state.modal } classChange={ this.state.classChange } 
+                handleImageSubmit={ this.handleImageSubmit } />
+                <hr />      
+                <BoardDetail boards={ this.state.boards } addNewImageButtonClick={ this.addNewImageButtonClick } 
+                deleteBoardButtonClick={ this.deleteBoardButtonClick } deleteImageButtonClick= { this.deleteImageButtonClick }
+                toggleEdit={ this.toggleEdit } editModal={ this.state.editModal } editBoardButtonClick={ this.editBoardButtonClick }
+                handleEditSubmit={ this.handleEditSubmit }  /> 
             </div>
         )
     }

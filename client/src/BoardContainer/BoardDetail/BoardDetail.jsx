@@ -14,7 +14,7 @@ class BoardDetail extends Component {
     render(){
         const boardsList = this.props.boards.map((board, i) => {
             return (
-                <div key={ board._id } id={ board._id } className="parent">
+                <div key={ i } id={ board._id } className="parent">
                     <hr />
                     <div><h2>{ board.title }</h2></div>
                     <div>{ board.description }</div>

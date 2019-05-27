@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import BoardContainer from './BoardContainer/BoardContainer';
 // import Profile from './Profile/Profile';
-// import UserContainer from './UserContainer/UserContainer';
+import UserContainer from './UserContainer/UserContainer';
 
 class App extends Component {
   constructor(){
@@ -44,7 +44,6 @@ class App extends Component {
     }
   }
   handleLogin = async (formData) => {
-    console.log(formData, 'login');
     try{
       const loginUser = await fetch('http://localhost:9000/users/login', {
         method: "POST",
@@ -55,9 +54,8 @@ class App extends Component {
         }
       })
       const parsedLoginResponse = await loginUser.json();
-      console.log(parsedLoginResponse);
+      console.log(parsedLoginResponse, 'login')
       if(parsedLoginResponse.status === 200){
-        console.log(this.state, 'this.state at login')
         this.setState({
           loggedIn: true,
           currentUser: parsedLoginResponse.data,
@@ -87,15 +85,19 @@ class App extends Component {
 
   };
   render(){
-    // console.log(this.state, 'this.state app.js')
+    console.log(this.state.currentUser, 'current user')
     return (
       <div className="App">
       <div className="header">
         <h4>a box of thoughts</h4>
       </div>
-      <hr />
         <div>
-          <BoardContainer />
+          {
+            this.state.loggedIn ?
+            <BoardContainer showBoards={ this.state.currentUser.boards } />
+            :
+            <UserContainer handleRegister={ this.handleRegister } handleLogin={ this.handleLogin } handleEditProfile={ this.handleEditProfile } />
+          }
         </div>
       </div>
     );

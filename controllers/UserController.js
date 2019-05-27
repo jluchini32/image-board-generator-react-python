@@ -14,10 +14,12 @@ router.post('/login', async (req, res) => {
         if(foundUser){
             if(bcrypt.compareSync(req.body.password, foundUser.password) === true){
                 req.session.logged = true;
-                req.session.username = req.body.username;
+                req.session.username = foundUser.username;
+                req.session.usersId = foundUser._id;
                 res.json({
                     status: 200,
-                    data: foundUser
+                    data: foundUser,
+                    reqSession: req.session
                 })
             }
         }
@@ -34,7 +36,7 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// logout
+// logout NOT WORKING
 router.get('/logout', async (req, res) => {
     try{
         req.session.destroy();
@@ -51,7 +53,8 @@ router.post("/", async (req, res)=>{
         req.body.password = hashedPassword;
         const newUser = await User.create(req.body)
         newUser.password = null;
-        req.session.userId = newUser._id;
+        req.session.username = foundUser.username;
+        req.session.usersId = foundUser._id;
         res.json({
             status: 200,
             data: newUser
