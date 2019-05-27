@@ -200,7 +200,7 @@ class BoardContainer extends Component {
                 <BoardDetail boards={ this.state.boards } addNewImageButtonClick={ this.addNewImageButtonClick } 
                 deleteBoardButtonClick={ this.deleteBoardButtonClick } deleteImageButtonClick= { this.deleteImageButtonClick }
                 toggleEdit={ this.toggleEdit } editModal={ this.state.editModal } editBoardButtonClick={ this.editBoardButtonClick }
-                handleEditSubmit={ this.handleEditSubmit }  /> 
+                handleEditSubmit={ this.handleEditSubmit } showBoards={ this.props.showBoards }  /> 
             </div>
         )
     }
