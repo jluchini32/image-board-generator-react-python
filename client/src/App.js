@@ -35,6 +35,7 @@ class App extends Component {
       console.log(err);
     }
   };
+
   handleEditProfile = async (formData) => {
     try{
       console.log('logout');
@@ -42,7 +43,8 @@ class App extends Component {
     }catch(err){
       console.log(err); 
     }
-  }
+  };
+
   handleLogin = async (formData) => {
     try{
       const loginUser = await fetch('http://localhost:9000/users/login', {
@@ -65,33 +67,22 @@ class App extends Component {
       console.log(err);
     }
   };
-  // NOT WORKING
-  logout = async () => {
-    console.log('logout');
-    try{
-      const logoutUser = await fetch('http://localhost:9000/users/logout', {
-        method: "GET",
-        credentials: 'include'
-      });
-      if(logoutUser.status === 200){
-        this.setState({
-          loggedIn: false,
-          currentUser: null
-        })
-      }
-    }catch(err){
-      console.log(err);
-    }
 
+  logout = async () => {
+    this.setState({
+      loggedIn: false,
+      currentUser: null
+    })
   };
+  
   render(){
-    console.log(this.state.currentUser, 'current user')
     return (
       <div className="App">
       <div className="header">
         <h4>a box of thoughts</h4>
       </div>
         <div>
+          <button onClick={ this.logout }>Logout</button>
           {
             this.state.loggedIn ?
             <BoardContainer showBoards={ this.state.currentUser.boards } />

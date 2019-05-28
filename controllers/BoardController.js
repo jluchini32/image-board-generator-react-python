@@ -5,10 +5,13 @@ const User = require('../models/User')
 // index
 router.get('/', async (req, res) => {
     try{
+        const usersId = req.session.usersId;
+        const currentUserBoards = await User.findById(usersId)
+            .populate({ path: 'boards' });
         const boards = await Board.find({});
         res.json({
             status: 200,
-            data: boards
+            data: currentUserBoards
         })
 
     } catch(err){

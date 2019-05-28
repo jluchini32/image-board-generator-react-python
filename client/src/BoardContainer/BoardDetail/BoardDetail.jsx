@@ -8,17 +8,12 @@ class BoardDetail extends Component {
         super();
         this.state = {
             id: "",
-            usersBoardsToShow: []
         }
     };
 
     render(){
-        const boardsList = this.props.boards.map((board, i) => {
-            if(board._id == this.props.showBoards[i]){
-                this.state.usersBoardsToShow.push(board)
-            }
-        })
-        const boardsToShow = this.state.usersBoardsToShow.map((board, i) => {
+        const usersBoardsToShow = this.props.boards;
+        const boardsToShow = usersBoardsToShow.map((board, i) => {
             return (
                 <div key={ i } id={ board._id } className="parent">
                     <div><h2>{ board.title }</h2></div>
@@ -29,7 +24,8 @@ class BoardDetail extends Component {
                     <ImageList images = { board.images } deleteImageButtonClick= { this.props.deleteImageButtonClick } board = {board} />
                 </div>
             )
-        });   
+        });  
+
         return(
             <div>
                 <div>
