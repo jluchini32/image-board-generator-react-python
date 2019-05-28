@@ -12,6 +12,17 @@ class App extends Component {
       boards: []
     }
   }
+
+  getBoards = async () => {
+    const boards = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/boards`, {
+        credentials: 'include'
+    })
+    const boardsJSON = await boards.json();
+    this.setState({
+        boards: [...this.state.boards, boardsJSON.data]
+    })
+  };
+
   handleRegister = async (formData) => {
     try{
       console.log(formData, 'register');
@@ -36,14 +47,16 @@ class App extends Component {
       console.log(err);
     }
   };
-  handleEditProfile = async (formData) => {
-    try{
-      console.log('logout');
+  
+  // handleEditProfile = async (formData) => {
+  //   try{
+  //     console.log('logout');
 
-    }catch(err){
-      console.log(err); 
-    }
-  }
+  //   }catch(err){
+  //     console.log(err); 
+  //   }
+  // };
+  
   handleLogin = async (formData) => {
     try{
       const loginUser = await fetch('http://localhost:9000/users/login', {
@@ -67,6 +80,7 @@ class App extends Component {
     }
   };
   // NOT WORKING
+  
   logout = async () => {
     console.log('logout');
     try{
@@ -85,6 +99,7 @@ class App extends Component {
     }
 
   };
+
   createBoard = async (formData) => {
     const newBoard = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/boards`, {
         credentials: 'include',
@@ -94,18 +109,18 @@ class App extends Component {
             "Content-Type": "application/json"
         }
     })
-    console.log(newBoard, 'newBoard')
     const parsedResponse = await newBoard.json();
-    console.log(parsedResponse, 'parsedResponse')
     if(newBoard.status === 200){
         this.setState({
             boards: [...this.state.boards, parsedResponse.data]
         })
     }
   };
+
   render(){
     console.log(this.state.currentUser, 'current user')
-    console.log(this.state.boards, 'boards app')
+    console.log(this.state.boards, 'this.state.boards app')
+    console.log(this.state, 'this.state app')
     return (
       <div className="App">
       <div className="header">
@@ -114,7 +129,7 @@ class App extends Component {
         <div>
           {
             this.state.loggedIn ?
-            <BoardContainer showBoards={ this.state.currentUser.boards } createBoard={ this.createBoard } />
+            <BoardContainer allBoards={ this.state.boards } getBoards={ this.getBoards } showBoards={ this.state.currentUser.boards } createBoard={ this.createBoard } />
             :
             <UserContainer handleRegister={ this.handleRegister } handleLogin={ this.handleLogin } handleEditProfile={ this.handleEditProfile } />
           }

@@ -19,18 +19,18 @@ class BoardContainer extends Component {
     }
 
     componentDidMount(){
-        this.getBoards();
+        this.props.getBoards()
     };
 
-    getBoards = async () => {
-        const boards = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/boards`, {
-            credentials: 'include'
-        })
-        const boardsJSON = await boards.json();
-        this.setState({
-            boards: boardsJSON.data,
-        })
-    };
+    // getBoards = async () => {
+    //     const boards = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/boards`, {
+    //         credentials: 'include'
+    //     })
+    //     const boardsJSON = await boards.json();
+    //     this.setState({
+    //         boards: boardsJSON.data,
+    //     })
+    // };
 
     // createBoard = async (formData) => {
     //     const newBoard = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/boards`, {
@@ -189,7 +189,8 @@ class BoardContainer extends Component {
     }; 
 
     render(){
-        console.log(this.state.boards)
+        console.log(this.state.boards, 'this.state.boards board container')
+        console.log(this.state, 'this.state BoardContainer')
         return (
             <div>   
                 <MakeBoard createBoard={ this.props.createBoard } selectedImageStateChange={ this.selectedImageStateChange } 
@@ -197,7 +198,7 @@ class BoardContainer extends Component {
                 updateBoard={ this.updateBoard } toggle={ this.toggle } modal={ this.state.modal } classChange={ this.state.classChange } 
                 handleImageSubmit={ this.handleImageSubmit } />
                 <hr />      
-                <BoardDetail boards={ this.state.boards } addNewImageButtonClick={ this.addNewImageButtonClick } 
+                <BoardDetail allBoards={ this.props.allBoards } addNewImageButtonClick={ this.addNewImageButtonClick } 
                 deleteBoardButtonClick={ this.deleteBoardButtonClick } deleteImageButtonClick= { this.deleteImageButtonClick }
                 toggleEdit={ this.toggleEdit } editModal={ this.state.editModal } editBoardButtonClick={ this.editBoardButtonClick }
                 handleEditSubmit={ this.handleEditSubmit } showBoards={ this.props.showBoards }  /> 

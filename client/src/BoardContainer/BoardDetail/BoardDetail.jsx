@@ -8,16 +8,26 @@ class BoardDetail extends Component {
         super();
         this.state = {
             id: "",
-            usersBoardsToShow: []
+            usersBoardsToShow: [],
+            boardIds: []
         }
     };
 
     render(){
-        this.props.boards.map((board, i) => {
-            if(board._id == this.props.showBoards[i]){
-                this.state.usersBoardsToShow.push(board)
-            }
+        const allBoardsMap = this.props.allBoards.map((board, i) => {
+            console.log(board, 'board boardDetail')
+            console.log(board[i]._id)
+            this.state.boardIds.push(board[i]._id)
         })
+
+        console.log(this.props.showBoards)
+        // if(board[i]._id == this.props.showBoards){
+        //     console.log('hit')
+            // this.setState({
+            //     usersBoardsToShow: [...this.state.usersBoardsToShow, board]
+            // })
+
+        console.log(this.state.boardIds)
         const boardsList = this.state.usersBoardsToShow.map((board, i) => {
             return (
                 <div key={ i } id={ board._id } className="parent">

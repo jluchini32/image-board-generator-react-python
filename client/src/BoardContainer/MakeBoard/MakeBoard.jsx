@@ -27,6 +27,7 @@ class MakeBoard extends Component {
     };
 
     render(){
+        console.log(this.state, 'make board')
         return (
             <div>
                 <h1>Create a New Board</h1>
