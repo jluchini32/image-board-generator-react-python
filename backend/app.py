@@ -5,7 +5,7 @@ from flask_cors import CORS
 from flask_bcrypt import check_password_hash
 
 from resources.boards import boards_api
-# from resources.users import users_api
+from resources.users import users_api
 # from resources.images import images_api
 import config
 
@@ -38,10 +38,10 @@ def load_user(userid):
 
 
 CORS(boards_api, origins=["http://localhost:3000"], supports_credentials=True)
-# CORS(users_api, origins= ["http://localhost:3000"], supports_credentials=True)
+CORS(users_api, origins= ["http://localhost:3000"], supports_credentials=True)
 # CORS(images_api, origins= ["http://localhost:3000"], supports_credentials=True)
 app.register_blueprint(boards_api, url_prefix='/api/v1')
-# app.register_blueprint(users_api, url_prefix='/users')
+app.register_blueprint(users_api, url_prefix='/users')
 # app.register_blueprint(images_api, url_prefix='/images')
 
 

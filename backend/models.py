@@ -5,33 +5,32 @@ from flask_bcrypt import generate_password_hash
 
 DATABASE = SqliteDatabase('imageboardcreator.db')
 
-# class User(UserMixin, Model):
-#     username = CharField(unique=True)
-#     password = CharField(max_length=100)
-#     is_admin = BooleanField(default=False)
+class User(UserMixin, Model):
+    username = CharField(unique=True)
+    password = CharField(max_length=100)
+    is_admin = BooleanField(default=False)
     
-#     class Meta:
-#         database = DATABASE
+    class Meta:
+        database = DATABASE
         
-#     @classmethod
-#     def create_user(cls, username, password, **kwargs):
-#         try:
-#             cls.select().where(
-#                 (cls.username==username)
-#             ).get()
-#         except cls.DoesNotExist:
-#             user = cls(username=username)
-#             user.password = generate_password_hash(password)
-#             user.save()
-#             return user
-#         else:
-#             raise Exception('that user already exists')
+    @classmethod
+    def create_user(cls, username, password, **kwargs):
+        try:
+            cls.select().where(
+                (cls.username==username)
+            ).get()
+        except cls.DoesNotExist:
+            user = cls(username=username)
+            user.password = generate_password_hash(password)
+            user.save()
+            return user
+        else:
+            raise Exception('that user already exists')
 
 class Board(Model):
     title = CharField()
     description = CharField()
-    images: []
-    # created_by = ForeignKeyField(User, related_name='board_set')
+    # images: []
 
     class Meta:
         database = DATABASE
@@ -39,7 +38,6 @@ class Board(Model):
 
 # class Images(Model):
 #     image_url = CharField()
-#     created_by = ForeignKeyField(Board, related_name='image_set')
 
 #     class Meta:
 #         database = DATABASE
@@ -56,5 +54,5 @@ class Board(Model):
 
 def initialize():
     DATABASE.connect()
-    DATABASE.create_tables([Board], safe=True)
+    DATABASE.create_tables([User, Board], safe=True)
     DATABASE.close()
