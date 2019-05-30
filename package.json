@@ -1,7 +1,7 @@
 {
   "name": "back-end",
   "version": "1.0.0",
-  "description": "",
+  "description": "## MVP/User Stories 1. Users login or register at the home screen.     * Once logged in, users can view their created boards or make a new board 2. Creating a new board     * User inputs a required title for the board and an optional description.     * One image selector box is on page, when clicked, search modal pops up.     * Upon submitting the search, app make a call to Unsplash API and pulls a random image link.     * Image is populated where the image selector box was and new image selector box appears next to it. 3. User can continue searching for new images until their board is complete.",
   "main": "server.js",
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -22,5 +22,13 @@
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jluchini32/image-board-generator-react-python.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jluchini32/image-board-generator-react-python/issues"
+  },
+  "homepage": "https://github.com/jluchini32/image-board-generator-react-python#readme"
 }

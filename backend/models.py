@@ -3,7 +3,11 @@ from peewee import *
 from flask_login import UserMixin
 from flask_bcrypt import generate_password_hash
 
-DATABASE = SqliteDatabase('imageboardcreator.db')
+DATABASE = PostgresqlDatabase(
+    'imageboard_db',
+    user='desuser',
+    password='password'
+    )
 
 class User(UserMixin, Model):
     username = CharField(unique=True)
@@ -30,6 +34,7 @@ class User(UserMixin, Model):
 class Board(Model):
     title = CharField()
     description = CharField()
+    created_by = ForeignKeyField(User, related_name='board_set')
     # images: []
 
     class Meta:

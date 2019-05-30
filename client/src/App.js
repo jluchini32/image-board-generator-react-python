@@ -15,7 +15,7 @@ class App extends Component {
   handleRegister = async (formData) => {
     try{
       console.log(formData, 'register');
-      const newUser = await fetch("http://localhost:9000/users", {
+      const newUser = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/users/registration`, {
         method: "POST",
         body: JSON.stringify(formData),
         credentials: 'include',
@@ -47,7 +47,7 @@ class App extends Component {
 
   handleLogin = async (formData) => {
     try{
-      const loginUser = await fetch('http://localhost:9000/users/login', {
+      const loginUser = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/users/login`, {
         method: "POST",
         body: JSON.stringify(formData),
         credentials: 'include',
