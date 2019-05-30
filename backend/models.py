@@ -12,7 +12,6 @@ DATABASE = PostgresqlDatabase(
 class User(UserMixin, Model):
     username = CharField(unique=True)
     password = CharField(max_length=100)
-    is_admin = BooleanField(default=False)
     
     class Meta:
         database = DATABASE
@@ -35,17 +34,13 @@ class Board(Model):
     title = CharField()
     description = CharField()
     created_by = ForeignKeyField(User, related_name='board_set')
-    # images: []
+    images: []
 
     class Meta:
         database = DATABASE
 
 
-# class Images(Model):
-#     image_url = CharField()
 
-#     class Meta:
-#         database = DATABASE
 
 
 

@@ -17,6 +17,7 @@ user_fields = {
 
 class UserList(Resource):
     def __init__(self):
+        print('this is hitting')
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument(
             'username',
@@ -42,7 +43,7 @@ class UserList(Resource):
         # if args['password'] == args['verify_password']:
         print(args, ' this is args')
         user = models.User.create_user(**args)
-
+        print(user, ' user stuff')
         login_user(user)
 
         return marshal(user, user_fields), 201
@@ -70,6 +71,8 @@ class User(Resource):
 
         super().__init__()
 
+
+
     @marshal_with(user_fields)
     def put(self, id):
         args = self.reqparse.parse_args()
@@ -92,6 +95,40 @@ class User(Resource):
         query.execute()
        
 
+class Login(Resource):
+    def __init__(self):
+        self.reqparse = reqparse.RequestParser()
+        self.reqparse.add_argument(
+            'username',
+            required=True,
+            help='No username provided',
+            location=['form', 'json']
+        )
+        self.reqparse.add_argument(
+            'password',
+            required=True,
+            help='No password provided',
+            location=['form', 'json']
+        )
+
+        super().__init__()
+
+    @marshal_with(user_fields)
+    def login():
+        json_data = request.json_data
+        try:
+            user = models.User.get(models.User.username == json_data.username)
+        except models.DoesNotExist:
+            flash('your email or password do not match', 'error')
+        else:
+            if check_password_hash(user.password == json.data.password):
+                login_user(user)
+                flash('you have been logged in', 'success')
+                return redirect(url_for('index'))
+            else:
+                flash('your email or password do not match')
+    
+
 
 users_api = Blueprint('resources.users', __name__)
 api = Api(users_api)
@@ -104,4 +141,9 @@ api.add_resource(
 api.add_resource(
     User,
     '/<int:id>'
+)
+
+api.add_resource(
+    Login,
+    '/login'
 )

@@ -8,7 +8,8 @@ import models
 board_fields = {
     # 'id': fields.Integer,
     'title': fields.String,
-    'description': fields.String
+    'description': fields.String,
+    'images': [fields.String]
 }
 
 class BoardList(Resource):
@@ -24,6 +25,13 @@ class BoardList(Resource):
 
         self.reqparse.add_argument(
             'description',
+            required=False,
+            help='No description provided',
+            location=['form', 'json']
+            )
+        
+        self.reqparse.add_argument(
+            'images',
             required=False,
             help='No description provided',
             location=['form', 'json']
@@ -88,6 +96,7 @@ class Board(Resource):
     def delete(self, id):
         query = models.Board.delete().where(models.Board.id ==id )
         query.execute()
+
 
 
 boards_api = Blueprint('resources.boards', __name__)

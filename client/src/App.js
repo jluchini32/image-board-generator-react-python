@@ -68,6 +68,8 @@ class App extends Component {
     }
   };
 
+  
+
   logout = async () => {
     this.setState({
       loggedIn: false,

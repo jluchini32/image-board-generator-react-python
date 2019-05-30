@@ -1,7 +1,7 @@
 from flask import Flask, g
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 import models
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from flask_bcrypt import check_password_hash
 
 from resources.boards import boards_api
@@ -9,8 +9,8 @@ from resources.users import users_api
 import config
 
 app = Flask(__name__)
-CORS(app)
 app.secret_key = config.SECRET_KEY
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -43,6 +43,7 @@ CORS(origins= ["http://localhost:3000"], supports_credentials=True)
 CORS(origins= ["https://api.unsplash.com/search/photos"], supports_credentials=True)
 app.register_blueprint(boards_api, url_prefix='/api/v1')
 app.register_blueprint(users_api, url_prefix='/users')
+
 
 @app.route("/logout")
 @login_required
