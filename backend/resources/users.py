@@ -1,12 +1,14 @@
 import json
 
-from flask import jsonify, Blueprint, abort, make_response
+from flask import Flask, jsonify, Blueprint, abort, make_response, redirect
 
 from flask_restful import (Resource, Api, reqparse,
                                inputs, fields, marshal,
                                marshal_with, url_for)
 
 from flask_login import login_user, logout_user, login_required, current_user
+from flask_cors import CORS
+from flask_bcrypt import check_password_hash
 import models
 
 user_fields = {
@@ -114,21 +116,19 @@ class Login(Resource):
         super().__init__()
 
     @marshal_with(user_fields)
-    def login():
-        json_data = request.json_data
+    def post(self):
+        print('this is hitting here')
+        args = self.reqparse.parse_args()
         try:
-            user = models.User.get(models.User.username == json_data.username)
+            user = models.User.get(models.User.username == args.username)
         except models.DoesNotExist:
             flash('your email or password do not match', 'error')
         else:
-            if check_password_hash(user.password == json.data.password):
+            if check_password_hash(user.password, args.password):
                 login_user(user)
-                flash('you have been logged in', 'success')
                 return redirect(url_for('index'))
             else:
                 flash('your email or password do not match')
-    
-
 
 users_api = Blueprint('resources.users', __name__)
 api = Api(users_api)
