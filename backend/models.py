@@ -34,7 +34,7 @@ class Board(Model):
     title = CharField()
     description = CharField()
     created_by = ForeignKeyField(User, related_name='board_set')
-    images: CharField()
+    images_column = CharField()
 
     class Meta:
         database = DATABASE

@@ -10,7 +10,7 @@ class BoardContainer extends Component {
             modal: false,
             editModal: false,
             boards: [],
-            selectedImage: {},
+            selectedImage: "",
             id: "",
             editBoardId: "",
             renderBoardDetail: false
@@ -101,9 +101,19 @@ class BoardContainer extends Component {
     };
 
     updateBoard = async (foundBoard, id) => {
-        console.log(foundBoard.images)
-        console.log(this.state.selectedImage)
-        // foundBoard.images.append(this.state.selectedImage);
+        console.log(foundBoard, 'foundboard in update')
+        if(foundBoard.images_column === null){
+            foundBoard.images_column = [];
+            foundBoard.images_column.push(this.state.selectedImage);
+        } else if (typeof foundBoard.images_column == "string"){
+            foundBoard.images_column = [foundBoard.images_column];
+            foundBoard.images_column.push(this.state.selectedImage);
+        }
+        else{
+            foundBoard.images_column.push(this.state.selectedImage);
+        }
+        
+        
         await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/api/v1/boards/${id}`, {
             method: "PUT",
             body: JSON.stringify(foundBoard),
@@ -199,7 +209,6 @@ class BoardContainer extends Component {
     }; 
 
     render(){
-        console.log(this.state.boards)
         return (
             <div>   
                 <MakeBoard createBoard={ this.createBoard } selectedImageStateChange={ this.selectedImageStateChange } 

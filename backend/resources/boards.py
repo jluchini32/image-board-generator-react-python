@@ -15,7 +15,7 @@ board_fields = {
     'id': fields.Integer,
     'title': fields.String,
     'description': fields.String,
-    'images': fields.String
+    'images_column': fields.String
 }
 
 class BoardList(Resource):
@@ -37,7 +37,7 @@ class BoardList(Resource):
             )
         
         self.reqparse.add_argument(
-            'images',
+            'images_column',
             required=False,
             help='No description provided',
             location=['form', 'json']
@@ -84,7 +84,7 @@ class Board(Resource):
             location=['form', 'json']
             )
         self.reqparse.add_argument(
-            'images',
+            'images_column',
             required=False,
             help='No description provided',
             location=['form', 'json']
