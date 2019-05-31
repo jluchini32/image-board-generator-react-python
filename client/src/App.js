@@ -65,6 +65,7 @@ class App extends Component {
         })
       // }
 
+
     }catch(err){
       console.log(err);
     }
@@ -78,7 +79,6 @@ class App extends Component {
   };
   
   render(){
-    console.log(this.state.currentUser, 'current user')
     return (
       <div className="App">
       <div className="header">
@@ -88,7 +88,7 @@ class App extends Component {
           <button onClick={ this.logout }>Logout</button>
           {
             this.state.loggedIn ?
-            <BoardContainer showBoards={ this.state.currentUser } />
+            <BoardContainer currentUser={ this.state.currentUser } />
             :
             <UserContainer handleRegister={ this.handleRegister } handleLogin={ this.handleLogin } handleEditProfile={ this.handleEditProfile } />
           }

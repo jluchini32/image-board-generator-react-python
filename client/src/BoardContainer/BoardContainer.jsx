@@ -24,15 +24,13 @@ class BoardContainer extends Component {
     };
 
     getUsersBoards = async () => {
-        const userInfo = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/api/v1/boards`, {
+        const allBoards = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/api/v1/boards`, {
             credentials: 'include'
         })
-        const userInfoJSON = await userInfo.json();
-        // if()
-        // this.setState({
-        //     boards: userInfoJSON.data.boards,
-        //     renderBoardDetail: true
-        // })
+        const showAllBoards = await allBoards.json();
+        this.setState({
+            boards: showAllBoards,
+        })
     };
 
     createBoard = async (formData) => {
@@ -45,11 +43,11 @@ class BoardContainer extends Component {
             }
         })
         const parsedResponse = await newBoard.json();
-        if(newBoard.status === 200){
+        // if(newBoard.status === 200){
             this.setState({
-                boards: [parsedResponse.data, ...this.state.boards]
+                boards: [parsedResponse, ...this.state.boards]
             })
-        }
+        // }
     };
 
     selectedImageStateChange = (newState) => {
@@ -61,8 +59,8 @@ class BoardContainer extends Component {
     handleImageSubmit = ()=> {
         this.toggle();
         this.state.boards.map((board) => {
-            if(board._id === this.state.id){
-                this.updateBoard(board, board._id)
+            if(board.id == this.state.id){
+                this.updateBoard(board, board.id)
             }
         })
     }; 
@@ -103,7 +101,9 @@ class BoardContainer extends Component {
     };
 
     updateBoard = async (foundBoard, id) => {
-        foundBoard.images.push(this.state.selectedImage);
+        console.log(foundBoard.images)
+        console.log(this.state.selectedImage)
+        // foundBoard.images.append(this.state.selectedImage);
         await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/api/v1/boards/${id}`, {
             method: "PUT",
             body: JSON.stringify(foundBoard),
@@ -114,27 +114,33 @@ class BoardContainer extends Component {
     };
 
     deleteBoardButtonClick = (e, id) => {
+        console.log(e.target.id)
+
         this.state.boards.map((board) => {
-            if (board._id === e.target.id){
-                this.deleteBoard(board._id)
+            console.log(board.id)
+
+            if (board.id == e.target.id){
+                console.log(board.id, 'hit')
+
+                this.deleteBoard(board.id)
             }
         })
     };
 
     deleteBoard = async (id) => {
         console.log(id)
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}api/v1/boards/${id}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/api/v1/boards/${id}`, {
             method: "DELETE",
         })
         if(response.status === 200){
             this.setState({
-                boards: this.state.boards.filter(board => board._id !== id)
+                boards: this.state.boards.filter(board => board.id !== id)
             })
         }
     }; 
 
     updateBoardAfterDelete = async (board) => {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}api/v1/boards/${board._id}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/api/v1/boards/${board.id}`, {
             method: "PUT",
             body: JSON.stringify(board),
             headers: {
@@ -155,28 +161,29 @@ class BoardContainer extends Component {
         this.updateBoardAfterDelete(board);
     }; 
 
-    // change add new image to this?
     editBoardButtonClick = (e) => {
+        console.log(e.target.id)
         this.setState({
             editBoardId: e.target.id
         })
         this.toggleEdit();
     };
-
+    
     handleEditSubmit = (text) => {
         this.state.boards.map((board) => {
-            if (board._id === this.state.editBoardId){
+            if (board.id == this.state.editBoardId){
+                console.log(board.id, 'hit')
+
                 this.editBoard(text, board)
             }
         })
         this.toggleEdit();
     };
 
-    // figure out why this is working but breaking image loop
     editBoard = async (text, board) => {
         console.log(text)
         console.log(board)
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}api/v1/boards/${this.state.editBoardId}`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/api/v1/boards/${this.state.editBoardId}`, {
             method: "PUT",
             body: JSON.stringify(text),
             headers: {
@@ -188,7 +195,7 @@ class BoardContainer extends Component {
                 boards: [...this.state.boards, text, board]
             })
         }
-        this.getBoards();
+        this.getUsersBoards();
     }; 
 
     render(){
@@ -200,15 +207,12 @@ class BoardContainer extends Component {
                 updateBoard={ this.updateBoard } toggle={ this.toggle } modal={ this.state.modal } classChange={ this.state.classChange } 
                 handleImageSubmit={ this.handleImageSubmit } />
                 <hr />
-                {
-                    this.state.renderBoardDetail ?
-                        <BoardDetail boards={ this.state.boards } addNewImageButtonClick={ this.addNewImageButtonClick } 
-                        deleteBoardButtonClick={ this.deleteBoardButtonClick } deleteImageButtonClick= { this.deleteImageButtonClick }
-                        toggleEdit={ this.toggleEdit } editModal={ this.state.editModal } editBoardButtonClick={ this.editBoardButtonClick }
-                        handleEditSubmit={ this.handleEditSubmit } showBoards={ this.props.showBoards }  />
-                    :
-                    null
-                }      
+            
+                <BoardDetail boards={ this.state.boards } addNewImageButtonClick={ this.addNewImageButtonClick } 
+                deleteBoardButtonClick={ this.deleteBoardButtonClick } deleteImageButtonClick= { this.deleteImageButtonClick }
+                toggleEdit={ this.toggleEdit } editModal={ this.state.editModal } editBoardButtonClick={ this.editBoardButtonClick }
+                handleEditSubmit={ this.handleEditSubmit } showBoards={ this.props.showBoards }  />
+   
                  
             </div>
         )

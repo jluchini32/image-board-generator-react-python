@@ -15,12 +15,12 @@ class BoardDetail extends Component {
         const usersBoardsToShow = this.props.boards;
         const boardsToShow = usersBoardsToShow.map((board, i) => {
             return (
-                <div key={ i } id={ board._id } className="parent">
+                <div key={ i } id={ board.id } className="parent">
                     <div><h2>{ board.title }</h2></div>
                     <div>{ board.description }</div>
-                    <Button className="button" onClick={ this.props.addNewImageButtonClick } id={ board._id }>Add New Image</Button>
-                    <Button className="button" id={ board._id } onClick={ this.props.editBoardButtonClick }>Edit Board</Button>
-                    <Button className="button" id={ board._id } onClick={ this.props.deleteBoardButtonClick }>Delete Board</Button>
+                    <Button className="button" onClick={ this.props.addNewImageButtonClick } id={ board.id }>Add New Image</Button>
+                    <Button className="button" id={ board.id } onClick={ this.props.editBoardButtonClick }>Edit Board</Button>
+                    <Button className="button" id={ board.id } onClick={ this.props.deleteBoardButtonClick }>Delete Board</Button>
                     <ImageList images = { board.images } deleteImageButtonClick= { this.props.deleteImageButtonClick } board = {board} />
                 </div>
             )

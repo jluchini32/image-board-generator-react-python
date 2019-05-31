@@ -1,15 +1,21 @@
-from flask import jsonify, Blueprint, g
-from flask_restful import (Resource, Api, reqparse, fields, marshal,
+import json
+
+from flask import Flask, jsonify, Blueprint, abort, make_response, redirect, flash, g
+
+from flask_restful import (Resource, Api, reqparse,
+                               inputs, fields, marshal,
                                marshal_with, url_for)
 
-
+from flask_login import login_user, logout_user, login_required, current_user
+from flask_cors import CORS
+from flask_bcrypt import check_password_hash
 import models
 
 board_fields = {
-    # 'id': fields.Integer,
+    'id': fields.Integer,
     'title': fields.String,
     'description': fields.String,
-    'images': fields.List(fields.String)
+    'images': fields.String
 }
 
 class BoardList(Resource):
@@ -40,14 +46,22 @@ class BoardList(Resource):
         super().__init__()
 
     def get(self):
+        boards = []
         all_boards = [marshal(board, board_fields) for board in models.Board.select()]
+        print(all_boards, 'allboards')
+        for board in models.Board.select():
+            boards.append(board)
+        # print(boards, 'boards')
         return all_boards
+
+        # for board in models.Board.select():
+        #     print(board.__dict__)
 
     @marshal_with(board_fields)
     def post(self):
         args = self.reqparse.parse_args()
         print(args, ' <----- args(req.body')
-        board = models.Board.create(created_by=g.user._get_current_object(), **args)
+        board = models.Board.create(created_by=current_user.id, **args)
         print(board, ' <--- board', type(board))
 
         return (board, 201)
@@ -65,6 +79,12 @@ class Board(Resource):
 
         self.reqparse.add_argument(
             'description',
+            required=False,
+            help='No description provided',
+            location=['form', 'json']
+            )
+        self.reqparse.add_argument(
+            'images',
             required=False,
             help='No description provided',
             location=['form', 'json']
