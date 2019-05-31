@@ -28,10 +28,11 @@ class BoardContainer extends Component {
             credentials: 'include'
         })
         const userInfoJSON = await userInfo.json();
-        this.setState({
-            boards: userInfoJSON.data.boards,
-            renderBoardDetail: true
-        })
+        // if()
+        // this.setState({
+        //     boards: userInfoJSON.data.boards,
+        //     renderBoardDetail: true
+        // })
     };
 
     createBoard = async (formData) => {

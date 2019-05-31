@@ -9,7 +9,7 @@ board_fields = {
     # 'id': fields.Integer,
     'title': fields.String,
     'description': fields.String,
-    'images': [fields.String]
+    'images': fields.List(fields.String)
 }
 
 class BoardList(Resource):

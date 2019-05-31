@@ -2,7 +2,6 @@ from flask import Flask, g
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 import models
 from flask_cors import CORS
-from flask_bcrypt import check_password_hash
 
 from resources.boards import boards_api
 from resources.users import users_api

@@ -1,6 +1,6 @@
 import json
 
-from flask import Flask, jsonify, Blueprint, abort, make_response, redirect
+from flask import Flask, jsonify, Blueprint, abort, make_response, redirect, flash
 
 from flask_restful import (Resource, Api, reqparse,
                                inputs, fields, marshal,
@@ -12,8 +12,8 @@ from flask_bcrypt import check_password_hash
 import models
 
 user_fields = {
-    'username': fields.String,
-    'password': fields.String
+    'id': fields.Integer,
+    'username': fields.String
 }
 
 
@@ -100,7 +100,7 @@ class User(Resource):
 class Login(Resource):
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
-        self.reqparse.add_argument(
+        self.reqparse.add_argument(  
             'username',
             required=True,
             help='No username provided',
@@ -112,23 +112,27 @@ class Login(Resource):
             help='No password provided',
             location=['form', 'json']
         )
+      
 
         super().__init__()
 
     @marshal_with(user_fields)
     def post(self):
-        print('this is hitting here')
         args = self.reqparse.parse_args()
+
         try:
             user = models.User.get(models.User.username == args.username)
+    
         except models.DoesNotExist:
             flash('your email or password do not match', 'error')
         else:
             if check_password_hash(user.password, args.password):
                 login_user(user)
-                return redirect(url_for('index'))
+                print(user.__dict__, 'this is user')
+                return user
             else:
                 flash('your email or password do not match')
+
 
 users_api = Blueprint('resources.users', __name__)
 api = Api(users_api)

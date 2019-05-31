@@ -9,7 +9,8 @@ class App extends Component {
     super();
     this.state = {
       loggedIn: false,
-      currentUser: null
+      currentUser: null,
+      currentUserBoards: []
     }
   }
   handleRegister = async (formData) => {
@@ -24,12 +25,12 @@ class App extends Component {
         }
       })
       const parsedResponse = await newUser.json();
-      if(parsedResponse.status === 200){
+      // if(parsedResponse.status === 200){
         this.setState({
           loggedIn: true,
-          currentUser: parsedResponse.data
+          currentUser: parsedResponse
         })
-      } 
+      // } 
 
     }catch(err){
       console.log(err);
@@ -57,18 +58,17 @@ class App extends Component {
       })
       const parsedLoginResponse = await loginUser.json();
       console.log(parsedLoginResponse, 'login')
-      if(parsedLoginResponse.status === 200){
+      // if(parsedLoginResponse.status === 200){
         this.setState({
           loggedIn: true,
-          currentUser: parsedLoginResponse.data,
+          currentUser: parsedLoginResponse,
         })
-      }
+      // }
+
     }catch(err){
       console.log(err);
     }
   };
-
-  
 
   logout = async () => {
     this.setState({
@@ -78,6 +78,7 @@ class App extends Component {
   };
   
   render(){
+    console.log(this.state.currentUser, 'current user')
     return (
       <div className="App">
       <div className="header">
@@ -87,7 +88,7 @@ class App extends Component {
           <button onClick={ this.logout }>Logout</button>
           {
             this.state.loggedIn ?
-            <BoardContainer showBoards={ this.state.currentUser.boards } />
+            <BoardContainer showBoards={ this.state.currentUser } />
             :
             <UserContainer handleRegister={ this.handleRegister } handleLogin={ this.handleLogin } handleEditProfile={ this.handleEditProfile } />
           }
